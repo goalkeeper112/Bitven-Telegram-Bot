@@ -3,7 +3,7 @@ require 'rest-client'
 require 'timeout'
 require 'byebug'
 
-token = '125546968:AAG9LPSAqz1aBVi1iLyLfj-wQ9IKY0838Bw'
+token = '204317225:AAHCYDrTafq3aoWlQAbVVGxRQ6KQO7ofQ4w'
 
 Telegram::Bot::Client.run(token) do |bot|
 	bot.listen do |message|
@@ -11,30 +11,56 @@ Telegram::Bot::Client.run(token) do |bot|
 
 		when Telegram::Bot::Types::CallbackQuery
 	      # Here you can handle your callbacks from inline buttons
-      		if message.data == 'surbitcoin'
+					if message.data == 'instrucciones'
+						bot.api.send_message(chat_id: message.from.id,
+																 text: "Hola #{message.from.first_name}! Gracias Por usarme, Mis instrucciones son las siguientes: \n
+													 			 1) Para iniciarlo, enviar '/start' \n
+																 2) ¿Deseas hacer una conversion?: Responder si o no \n
+																 3) ¿Qué tipo de conversión desea hacer?: Responder 'BTC a VEF', 'VEF a BTC', 'BTC a BRL', 'BRL a BTC', 'BTC a USD' y 'USD a BTC' \n
+																 4) Ingrese monto a convertir, solo números \n
+																 Gracias por elegirme!")
+					end
+
+					if message.data == 'surbitcoin'
 		      	response = RestClient.get 'https://api.blinktrade.com/api/v1/VEF/ticker'
 		      	response = JSON.parse response
 		      	puts response
 
-		      	rate_vef = response["high"].to_i + response["low"].to_i
+		      	rate_vef = response["high"].to_f + response["low"].to_f
 		      	rate_vef = rate_vef.fdiv(2)
 
 		      	bot.api.send_message(chat_id: message.from.id, text: "Hola, #{message.from.first_name}! \n Las estadisticas son las siguientes:  \n Precio de compra #{response['buy']} Bs. \n Precio de venta #{response['sell']} Bs. \n Precio Promedio #{rate_vef} Bs.")
 		      	bot.api.send_message(chat_id: message.from.id, text: '¿Deseas hacer una conversión?')
 
+						kb = [
+							Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Si', callback_data: 'si'),
+							Telegram::Bot::Types::InlineKeyboardButton.new(text: 'No', callback_data: 'no')
+						]
+						markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+						bot.api.send_message(chat_id: message.from.id, text: 'Elige una opción', reply_markup: markup)
+
 		      	bot.listen do |reply|
-		      		case reply.text
+		      		case reply.data
 			      		when "si"
-			      			bot.api.send_message(chat_id: message.from.id, text: "¿Qué tipo de conversión deseas?")
+			      			bot.api.send_message(chat_id: reply.from.id, text: "¿Qué tipo de conversión deseas?")
+
+									kb = [
+										Telegram::Bot::Types::InlineKeyboardButton.new(text: 'BTC a VEF', callback_data: 'BTC a VEF'),
+										Telegram::Bot::Types::InlineKeyboardButton.new(text: 'VEF a BTC', callback_data: 'VEF a BTC'),
+									]
+									markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+									bot.api.send_message(chat_id: reply.from.id, text: 'Elige una opción', reply_markup: markup)
+
 			      			bot.listen do |reply_2|
-			      				case reply_2.text
+										
+			      				case reply_2.data
 				      				when "BTC a VEF"
 			      						bot.api.send_message(chat_id: reply_2.from.id, text: "Ingrese el monto por favor")
-				      					
+
 				      					bot.listen do |reply_3|
 
 				      						monto = reply_3.text
-				      						monto = monto.to_i
+				      						monto = monto.to_f
 
 				      						conversion = rate_vef * monto
 
@@ -43,11 +69,11 @@ Telegram::Bot::Client.run(token) do |bot|
 				      					end
 				      				when "VEF a BTC"
 			      						bot.api.send_message(chat_id: reply_2.from.id, text: "Ingrese el monto por favor")
-				      					
+
 				      					bot.listen do |reply_3|
 
 				      						monto = reply_3.text
-				      						monto = monto.to_i
+				      						monto = monto.to_f
 
 				      						conversion = monto.fdiv(rate_vef)
 
@@ -65,24 +91,41 @@ Telegram::Bot::Client.run(token) do |bot|
 			  	response = JSON.parse response
 			  	puts response
 
-			  	rate_brl = response["high"].to_i + response["low"].to_i
+			  	rate_brl = response["high"].to_f + response["low"].to_f
 			  	rate_brl = rate_brl.fdiv(2)
 
 			  	bot.api.send_message(chat_id: message.from.id, text: "Hola, #{message.from.first_name}! \n Las estadisticas son las siguientes:  \n Precio de compra #{response['buy']} R$ \n Precio de venta #{response['sell']} R$ \n Precio Promedio #{rate_brl} R$")
+					bot.api.send_message(chat_id: message.from.id, text: '¿Deseas hacer una conversión?')
+
+					kb = [
+						Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Si', callback_data: 'si'),
+						Telegram::Bot::Types::InlineKeyboardButton.new(text: 'No', callback_data: 'no')
+					]
+					markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+					bot.api.send_message(chat_id: message.from.id, text: 'Elige una opción', reply_markup: markup)
+
 
 			  	bot.listen do |reply|
-			  		case reply.text
+			  		case reply.data
 				  		when "si"
-				  			bot.api.send_message(chat_id: message.from.id, text: "¿Qué tipo de conversión deseas?")
+				  			bot.api.send_message(chat_id: reply.from.id, text: "¿Qué tipo de conversión deseas?")
+
+								kb = [
+									Telegram::Bot::Types::InlineKeyboardButton.new(text: 'BTC a BRL', callback_data: 'BTC a BRL'),
+									Telegram::Bot::Types::InlineKeyboardButton.new(text: 'BRL a BTC', callback_data: 'BRL a BTC'),
+								]
+								markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+								bot.api.send_message(chat_id: reply.from.id, text: 'Elige una opción', reply_markup: markup)
+
 				  			bot.listen do |reply_2|
-				  				case reply_2.text
+				  				case reply_2.data
 					  				when "BTC a BRL"
 				  						bot.api.send_message(chat_id: reply_2.from.id, text: "Ingrese el monto por favor")
-					  					
+
 					  					bot.listen do |reply_3|
 
 					  						monto = reply_3.text
-					  						monto = monto.to_i
+					  						monto = monto.to_f
 
 					  						conversion = rate_brl * monto
 
@@ -91,18 +134,18 @@ Telegram::Bot::Client.run(token) do |bot|
 					  					end
 						  				when "BRL a BTC"
 					  						bot.api.send_message(chat_id: reply_2.from.id, text: "Ingrese el monto por favor")
-						  					
+
 						  					bot.listen do |reply_3|
 
 						  						monto = reply_3.text
-						  						monto = monto.to_i
+						  						monto = monto.to_f
 
 						  						conversion = monto.fdiv(rate_brl)
 
 						  						bot.api.send_message(chat_id: reply_3.from.id, text: "hola, esta es la conversión #{conversion} BTC")
 						  						bot.api.send_message(chat_id: reply_3.from.id, text: "Para un nuevo uso, envia /start")
 					  						end
-			  						
+
 			  					end
 			  				end
 		  			end
@@ -114,24 +157,41 @@ Telegram::Bot::Client.run(token) do |bot|
 	  		response = JSON.parse response
 	  		puts response
 
-	  		rate_usd = response["high"].to_i + response["low"].to_i
+	  		rate_usd = response["high"].to_f + response["low"].to_f
 	  		rate_usd = rate_usd.fdiv(2)
 
 	  		bot.api.send_message(chat_id: message.from.id, text: "Hola, #{message.from.first_name}! \n Las estadisticas son las siguientes:  \n Precio de compra #{response['bid']} $ \n Precio de venta #{response['ask']} $ \n Precio Promedio #{rate_usd} $")
+				bot.api.send_message(chat_id: message.from.id, text: '¿Deseas hacer una conversión?')
+
+				kb = [
+					Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Si', callback_data: 'si'),
+					Telegram::Bot::Types::InlineKeyboardButton.new(text: 'No', callback_data: 'no')
+				]
+				markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+				bot.api.send_message(chat_id: message.from.id, text: 'Elige una opción', reply_markup: markup)
 
 	  		bot.listen do |reply|
-	  			case reply.text
+	  			case reply.data
 	  				when "si"
-	  					bot.api.send_message(chat_id: message.from.id, text: "¿Qué tipo de conversión deseas?")
+	  					bot.api.send_message(chat_id: reply.from.id, text: "¿Qué tipo de conversión deseas?")
+
+							kb = [
+								Telegram::Bot::Types::InlineKeyboardButton.new(text: 'BTC a USD', callback_data: 'BTC a USD'),
+								Telegram::Bot::Types::InlineKeyboardButton.new(text: 'USD a BTC', callback_data: 'USD a BTC'),
+							]
+							markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+							bot.api.send_message(chat_id: reply.from.id, text: 'Elige una opción', reply_markup: markup)
+
 	  					bot.listen do |reply_2|
-	  						case reply_2.text
+
+	  						case reply_2.data
 	  							when "BTC a USD"
   									bot.api.send_message(chat_id: reply_2.from.id, text: "Ingrese el monto por favor")
-	  								
+
 	  								bot.listen do |reply_3|
 
 	  									monto = reply_3.text
-	  									monto = monto.to_i
+	  									monto = monto.to_f
 
 	  									conversion = rate_usd * monto
 
@@ -140,11 +200,11 @@ Telegram::Bot::Client.run(token) do |bot|
 	  								end
 	  							when "USD a BTC"
   									bot.api.send_message(chat_id: reply_2.from.id, text: "Ingrese el monto por favor")
-	  								
+
 	  								bot.listen do |reply_3|
 
 	  									monto = reply_3.text
-	  									monto = monto.to_i
+	  									monto = monto.to_f
 
 	  									conversion = monto.fdiv(rate_usd)
 
@@ -162,7 +222,7 @@ Telegram::Bot::Client.run(token) do |bot|
 		response_usd = JSON.parse response_usd
 		puts response_usd
 
-		rate_usd = response_usd["high"].to_i + response_usd["low"].to_i
+		rate_usd = response_usd["high"].to_f + response_usd["low"].to_f
 		rate_usd = rate_usd.fdiv(2)
 
 		result_usd = rate_usd + ' $'
@@ -171,7 +231,7 @@ Telegram::Bot::Client.run(token) do |bot|
 		response_vef = JSON.parse response_vef
 		puts response_vef
 
-		rate_vef = response_vef["high"].to_i + response_vef["low"].to_i
+		rate_vef = response_vef["high"].to_f + response_vef["low"].to_f
 		rate_vef = rate_vef.fdiv(2)
 
 		result_vef = rate_vef + ' Bs.'
@@ -190,6 +250,7 @@ Telegram::Bot::Client.run(token) do |bot|
 			bot.api.answer_inline_query(inline_query_id: message.id, results: results)
 		when Telegram::Bot::Types::Message
 			kb = [
+				Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Instrucciones', callback_data: 'instrucciones'),
 				Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Precio Surbitcoin', callback_data: 'surbitcoin'),
 				Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Precio Foxbit',     callback_data: 'foxbit'),
 				Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Precio Bitfinex',   callback_data: 'bitfinex')
@@ -212,7 +273,7 @@ response = RestClient.get 'https://api.blinktrade.com/api/v1/VEF/ticker'
 response = JSON.parse response
 puts response
 
-rate_vef = response["high"].to_i + response["low"].to_i
+rate_vef = response["high"].to_f + response["low"].to_f
 rate_vef = rate_vef.fdiv(2)
 
 reply.text = "Hola, #{message.from.first_name}! \n Las estadisticas son las siguientes:  \n Precio de compra #{response['buy']} Bs. \n Precio de venta #{response['sell']} Bs. \n Precio Promedio #{rate_vef} Bs."
@@ -221,7 +282,7 @@ response = RestClient.get 'https://api.blinktrade.com/api/v1/BRL/ticker'
 response = JSON.parse response
 puts response
 
-rate_brl = response["high"].to_i + response["low"].to_i
+rate_brl = response["high"].to_f + response["low"].to_f
 rate_brl = rate_brl.fdiv(2)
 
 reply.text = "Hola, #{message.from.first_name}! \n Las estadisticas son las siguientes:  \n Precio de compra #{response['buy']} R$ \n Precio de venta #{response['sell']} R$ \n Precio Promedio #{rate_brl} R$"
@@ -230,7 +291,7 @@ response = RestClient.get 'https://api.bitfinex.com/v1/pubticker/btcusd'
 response = JSON.parse response
 puts response
 
-rate_usd = response["high"].to_i + response["low"].to_i
+rate_usd = response["high"].to_f + response["low"].to_f
 rate_usd = rate_usd.fdiv(2)
 
 reply.text = "Hola, #{message.from.first_name}! \n Las estadisticas son las siguientes:  \n Precio de compra #{response['bid']} $ \n Precio de venta #{response['ask']} $ \n Precio Promedio #{rate_usd} $"
