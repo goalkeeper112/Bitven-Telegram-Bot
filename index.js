@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 'use strict'
 
 var tg     = require('telegram-node-bot')/*('194307003:AAH_s2M1p1cnCIpF_fZsvR55RGKcCoyN938')*/('126466962:AAHa0NgrPi3WDV4j6A0bFk9zCrWePhbP3Lk')
@@ -179,9 +178,6 @@ tg.controller('ConvertController', ($) => {
 })
 
 /*var TelegramBot = require("node-telegram-bot-api");
-=======
-var TelegramBot = require("node-telegram-bot-api");
->>>>>>> 5d2b64afdd2975bcbcf6ba95b9678c6fd84d9a09
 var Client     = require("node-rest-client").Client;
 
 var token = "126466962:AAHa0NgrPi3WDV4j6A0bFk9zCrWePhbP3Lk";
@@ -204,11 +200,7 @@ bot.onText(/\/precio (.+)/, function(msg, match){
       client.get('https://api.blinktrade.com/api/v1/VEF/ticker', function(data, response){
           data = JSON.parse(data);
           var rate_vef = parseFloat(data.high) + parseFloat(data.low);
-<<<<<<< HEAD
   				  rate_vef = rate_vef / 2;
-=======
-  				    rate_vef = rate_vef / 2;
->>>>>>> 5d2b64afdd2975bcbcf6ba95b9678c6fd84d9a09
           bot.sendMessage(fromID, "Hola, " + msg.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.buy + "Bs. \n Precio de venta " + data.sell + "Bs. \n Precio Promedio " + rate_vef + "Bs.");
       });
       break;
@@ -246,11 +238,7 @@ bot.onText(/\/conversion (.+) (.+)/, function(msg, match){
 
           var result = monto * rate_vef;
 
-<<<<<<< HEAD
           bot.sendMessage(fromID, "Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "Bs.");
-=======
-          bot.sendMessage(fromID, "Hola, " + monto + " BTC equivalen a " + result + "Bs.");
->>>>>>> 5d2b64afdd2975bcbcf6ba95b9678c6fd84d9a09
       });
       break;
     case "vef_btc":
@@ -276,11 +264,7 @@ bot.onText(/\/conversion (.+) (.+)/, function(msg, match){
 
           var result = monto * rate_brl;
 
-<<<<<<< HEAD
           bot.sendMessage(fromID, "Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "R$");
-=======
-          bot.sendMessage(fromID, "Hola, " + monto + " BTC equivalen a " + result + "R$");
->>>>>>> 5d2b64afdd2975bcbcf6ba95b9678c6fd84d9a09
       });
       break;
     case "brl_btc":
@@ -304,11 +288,7 @@ bot.onText(/\/conversion (.+) (.+)/, function(msg, match){
 
           var result = monto * rate_usd;
 
-<<<<<<< HEAD
           bot.sendMessage(fromID, "Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "$");
-=======
-          bot.sendMessage(fromID, "Hola, " + monto + " BTC equivalen a " + result + "$");
->>>>>>> 5d2b64afdd2975bcbcf6ba95b9678c6fd84d9a09
       });
       break;
     case "usd_btc":
@@ -327,7 +307,4 @@ bot.onText(/\/conversion (.+) (.+)/, function(msg, match){
 
   }
 });
-<<<<<<< HEAD
 */
-=======
->>>>>>> 5d2b64afdd2975bcbcf6ba95b9678c6fd84d9a09
