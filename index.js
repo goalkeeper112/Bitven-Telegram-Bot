@@ -5,7 +5,7 @@ var Client = require("node-rest-client").Client;
 var client = new Client();
 
 var btcUSD = client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
-      rate_usd = parseFloat(data.high) + parseFloat(data.low);
+      var rate_usd = parseFloat(data.high) + parseFloat(data.low);
       rate_usd = rate_usd / 2;
       return rate_usd;
   });
