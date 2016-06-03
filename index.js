@@ -4,14 +4,11 @@ var tg     = require('telegram-node-bot')/*('194307003:AAH_s2M1p1cnCIpF_fZsvR55R
 var Client = require("node-rest-client").Client;
 var client = new Client();
 
-var btcUSD = function(){
-  var rate_usd;
-  client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
+var btcUSD = client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
       rate_usd = parseFloat(data.high) + parseFloat(data.low);
-      return rate_usd = rate_usd / 2;
+      rate_usd = rate_usd / 2;
+      return rate_usd;
   });
-  return rate_usd;
-}
 
 tg.router.
     when(['/start'], 'StartController')
