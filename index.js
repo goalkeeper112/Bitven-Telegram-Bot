@@ -156,7 +156,7 @@ tg.controller('ConvertController', ($) => {
             break
           case "btc_usd":
             var monto = parseFloat($.query.amount);
-            console.log(btcUSD());
+            console.log(btcUSD);
             client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
                 var rate_usd = parseFloat(data.high) + parseFloat(data.low);
         				    rate_usd = rate_usd / 2;
