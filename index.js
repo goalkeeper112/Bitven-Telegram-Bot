@@ -19,6 +19,9 @@ tg.router.
 tg.router.
     when(['/dao'], 'PoloniexController')
 
+tg.router.
+    when(['/lisk'], 'PoloniexController')
+
 
 tg.controller('StartController', ($) => {
   tg.for('/start', ($) => {
