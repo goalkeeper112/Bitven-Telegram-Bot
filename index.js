@@ -4,6 +4,14 @@ var tg     = require('telegram-node-bot')/*('194307003:AAH_s2M1p1cnCIpF_fZsvR55R
 var Client = require("node-rest-client").Client;
 var client = new Client();
 
+var btcUSD = function(){
+  return client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
+      var rate_usd = parseFloat(data.high) + parseFloat(data.low);
+          rate_usd = rate_usd / 2;
+      return rate_usd;
+  });
+}
+
 tg.router.
     when(['/start'], 'StartController')
 
@@ -150,7 +158,7 @@ tg.controller('ConvertController', ($) => {
             break
           case "btc_usd":
             var monto = parseFloat($.query.amount);
-
+            console.log(btcUSD());
             client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
                 var rate_usd = parseFloat(data.high) + parseFloat(data.low);
         				    rate_usd = rate_usd / 2;
