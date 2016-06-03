@@ -181,6 +181,15 @@ tg.controller('ConvertController', ($) => {
             });
 
             break;
+          case "ether_btc":
+            var monto = parseFloat($.query.amount);
+
+            client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
+              var result_ether = monto * parseFloat(data.BTC_ETH.last);
+              $.sendMessage("Hola, " + monto + " eth equivalen a " + result_ether.toFixed(8) + " btc");
+            });
+
+            break;
           case "btc_dao":
             var monto = parseFloat($.query.amount);
 
@@ -190,11 +199,29 @@ tg.controller('ConvertController', ($) => {
             });
 
             break;
+          case "dao_btc":
+            var monto = parseFloat($.query.amount);
+
+            client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
+              var result_ether = monto * parseFloat(data.BTC_DAO.last);
+              $.sendMessage("Hola, " + monto + " dao equivalen a " + result_ether.toFixed(8) + " btc");
+            });
+
+            break;
           case "btc_lisk":
             var monto = parseFloat($.query.amount);
 
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_ether = monto / parseFloat(data.BTC_LSK.last);
+              $.sendMessage("Hola, " + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
+            });
+
+            break;
+          case "lisk_btc":
+            var monto = parseFloat($.query.amount);
+
+            client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
+              var result_ether = monto * parseFloat(data.BTC_LSK.last);
               $.sendMessage("Hola, " + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
             });
 
