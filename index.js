@@ -1,9 +1,15 @@
 'use strict'
 
-const tg     = require('telegram-node-bot')/*('194307003:AAH_s2M1p1cnCIpF_fZsvR55RGKcCoyN938')*/('126466962:AAHa0NgrPi3WDV4j6A0bFk9zCrWePhbP3Lk')
-const Client = require("node-rest-client").Client;
-const client = new Client();
-const botan  = require('botanio')(":09oH2pUUirBAyAX_2tcc_8l7mevN8Ys");
+const tg      = require('telegram-node-bot')/*('194307003:AAH_s2M1p1cnCIpF_fZsvR55RGKcCoyN938')*/('126466962:AAHa0NgrPi3WDV4j6A0bFk9zCrWePhbP3Lk')
+const Client  = require("node-rest-client").Client;
+const client  = new Client();
+const botan   = require('botanio')(":09oH2pUUirBAyAX_2tcc_8l7mevN8Ys");
+const capture = require('phantomjs-capture');
+const fs      = require('fs');
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 tg.router.
     when(['/start'], 'StartController')
@@ -29,6 +35,9 @@ tg.router.
 tg.router.
     when(['/lisk'], 'PoloniexController')
 
+tg.router.
+    when(['/grafico_bitfinex', '/grafico_kraken'], 'GraficosController')
+
 tg.controller('StartController', ($) => {
   tg.for('/start', ($) => {
     botan.track($.message, 'User answer');
@@ -44,10 +53,10 @@ tg.controller('StartController', ($) => {
                 rate_vef = rate_vef / 2;
             if($.message.from.first_name == "Doriam"){
               botan.track($.message, 'User answer');
-              $.sendMessage("Hola, Mamaguevo! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.buy + "Bs. \n Precio de venta " + data.sell + "Bs. \n Precio Promedio " + rate_vef + "Bs.");
+              $.sendMessage("Hola, Mamaguevo! \n Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "Bs. \n Precio de venta " + numberWithCommas(data.sell) + "Bs. \n Precio Promedio " + numberWithCommas(rate_vef) + "Bs.");
             }else{
               botan.track($.message, 'User answer');
-              $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.buy + "Bs. \n Precio de venta " + data.sell + "Bs. \n Precio Promedio " + rate_vef + "Bs.");
+              $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "Bs. \n Precio de venta " + numberWithCommas(data.sell) + "Bs. \n Precio Promedio " + numberWithCommas(rate_vef) + "Bs.");
             }
         });
       },
@@ -90,7 +99,7 @@ tg.controller('StartController', ($) => {
             let rate_bitven = rate_usd * data.USD.dolartoday;
             if($.message.from.first_name == "Doriam"){
               botan.track($.message, 'User answer');
-              $.sendMessage("Hola, Mamaguevo! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.bid + "$ \n Precio de venta " + data.ask + "$ \n Precio Promedio " + rate_usd + "$");
+              $.sendMessage("Hola, mamaguevo, El precio Bitven actual es " + rate_bitven.toFixed(2) + " Bs. por 1 BTC");
             }else{
               botan.track($.message, 'User answer');
               $.sendMessage("Hola, " + $.message.from.first_name + ", El precio Bitven actual es " + rate_bitven.toFixed(2) + " Bs. por 1 BTC");
@@ -119,9 +128,61 @@ tg.controller('StartController', ($) => {
           botan.track($.message, 'User answer');
           $.sendMessage("USD: \n Precio de compra " + parseFloat(data.result.XETHZUSD.b[0]).toFixed(2) + "$ \n Precio de venta " + parseFloat(data.result.XETHZUSD.a[0]).toFixed(2) + "$ \n Precio Promedio " + parseFloat(data.result.XETHZUSD.c[0]).toFixed(2) + "$");
         });
+      },
+      '/grafico_bitfinex': () => {
+        capture({
+            dir: './captures',
+            output: 'capture_bitfinex.png',
+            url: 'http://bitcoinwisdom.com/markets/bitfinex/btcusd',
+            size: '1920x800',
+            screenTimer: 6000
+        }, function(err, results){
+            console.log(results);
+            $.sendPhoto(fs.createReadStream(results.fullPNGPath));
+        });
+      },
+      '/grafico_kraken': () => {
+        capture({
+            dir: './captures',
+            output: 'capture_kraken.png',
+            url: 'https://bitcoinwisdom.com/markets/kraken/btceur',
+            size: '1920x800',
+            screenTimer: 6000
+        }, function(err, results){
+            console.log(results);
+            $.sendPhoto(fs.createReadStream(results.fullPNGPath));
+        });
       }
     });
   });
+});
+
+tg.controller('GraficosController', ($) => {
+    tg.for('/grafico_bitfinex', ($) => {
+      capture({
+          dir: './captures',
+          output: 'capture_bitfinex.png',
+          url: 'http://bitcoinwisdom.com/markets/bitfinex/btcusd',
+          size: '1920x800',
+          screenTimer: 6000
+      }, function(err, results){
+          console.log(results);
+          $.sendPhoto(fs.createReadStream(results.fullPNGPath));
+      });
+    });
+
+    tg.for('/grafico_kraken', ($) => {
+      capture({
+          dir: './captures',
+          output: 'capture_kraken.png',
+          url: 'https://bitcoinwisdom.com/markets/kraken/btceur',
+          size: '1920x800',
+          screenTimer: 6000
+      }, function(err, results){
+          console.log(results);
+          $.sendPhoto(fs.createReadStream(results.fullPNGPath));
+      });
+    });
 });
 
 tg.controller('BitvenController', ($) => {
@@ -133,7 +194,7 @@ tg.controller('BitvenController', ($) => {
         let rate_bitven = rate_usd * data.USD.dolartoday;
         if($.message.from.first_name == "Doriam"){
           botan.track($.message, 'User answer');
-          $.sendMessage("Hola, Mamaguevo! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.bid + "$ \n Precio de venta " + data.ask + "$ \n Precio Promedio " + rate_usd + "$");
+          $.sendMessage("Hola, Mamaguevo, El precio Bitven actual es " + rate_bitven.toFixed(2) + " Bs. por 1 BTC");
         }else{
           botan.track($.message, 'User answer');
           $.sendMessage("Hola, " + $.message.from.first_name + ", El precio Bitven actual es " + rate_bitven.toFixed(2) + " Bs. por 1 BTC");
@@ -214,10 +275,10 @@ tg.controller('ExchangeController', ($) => {
               rate_vef = rate_vef / 2;
           if($.message.from.first_name == "Doriam"){
             botan.track($.message, 'User answer');
-            $.sendMessage("Hola, Mamaguevo! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.buy + "Bs. \n Precio de venta " + data.sell + "Bs. \n Precio Promedio " + rate_vef + "Bs.");
+            $.sendMessage("Hola, Mamaguevo! \n Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "Bs. \n Precio de venta " + numberWithCommas(data.sell) + "Bs. \n Precio Promedio " + numberWithCommas(rate_vef) + "Bs.");
           }else{
             botan.track($.message, 'User answer');
-            $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.buy + "Bs. \n Precio de venta " + data.sell + "Bs. \n Precio Promedio " + rate_vef + "Bs.");
+            $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "Bs. \n Precio de venta " + numberWithCommas(data.sell) + "Bs. \n Precio Promedio " + numberWithCommas(rate_vef) + "Bs.");
           }
       });
     });
@@ -229,10 +290,10 @@ tg.controller('ExchangeController', ($) => {
               rate_brl = rate_brl / 2;
           if($.message.from.first_name == "Doriam"){
             botan.track($.message, 'User answer');
-            $.sendMessage("Hola, Mamaguevo! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.buy + "R$ \n Precio de venta " + data.sell + "R$ \n Precio Promedio " + rate_brl + "R$");
+            $.sendMessage("Hola, Mamaguevo! \n Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "R$ \n Precio de venta " + numberWithCommas(data.sell) + "R$ \n Precio Promedio " + rate_brl + "R$");
           }else{
             botan.track($.message, 'User answer');
-            $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.buy + "R$ \n Precio de venta " + data.sell + "R$ \n Precio Promedio " + rate_brl + "R$");
+            $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "R$ \n Precio de venta " + numberWithCommas(data.sell) + "R$ \n Precio Promedio " + rate_brl + "R$");
           }
       });
     });
