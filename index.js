@@ -7,15 +7,12 @@ const botan  = require('botanio')(":09oH2pUUirBAyAX_2tcc_8l7mevN8Ys");
 
 tg.router.
     when(['/start'], 'StartController')
-/*
-tg.router.
-    when([], 'ExchangeController')
-
-tg.router.
-    when(['/surbitcoin'], 'ExchangeController')*/
 
 tg.router.
     when(['/surbitcoin', '/bitfinex', '/foxbit'], 'ExchangeController')
+
+tg.router.
+    when(['/kraken', '/kraken_ether'], 'KrakenController')
 
 tg.router.
     when(['/bitven'], 'BitvenController')
@@ -35,7 +32,7 @@ tg.router.
 tg.controller('StartController', ($) => {
   tg.for('/start', ($) => {
     botan.track($.message, 'User answer');
-    $.sendMessage("Bienvenido a Bitven Bot, Conoce el precio de bitcoin en tiempo real \n El bot posee los siguientes comandos: \n 1) /exchange_consultar, ejemplo: /bitfinex /surbitcoin /foxbit \n 2) /convert de_a monto, ejemplo: /convert btc_usd 2000 \n 3) /ether \n 4) /dao \n 5) /lisk \n Gracias por elegirnos :D");
+    $.sendMessage("Bienvenido a Bitven Bot, Conoce el precio de bitcoin en tiempo real \n El bot posee los siguientes comandos: \n 1) /exchange_consultar, ejemplo: /bitfinex /surbitcoin /foxbit \n 2) /convert de_a monto, ejemplo: /convert btc_usd 2000 \n 3) /ether \n 4) /dao \n 5) /lisk \n 6) /bitven \n Gracias por elegirnos :D");
 
     $.runMenu({
       message: 'Select:',
@@ -85,6 +82,44 @@ tg.controller('StartController', ($) => {
           $.sendMessage("Hola, un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc \n Gracias por usar el bot");
         });
       },
+      '/bitven': () => {
+        client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
+          var rate_usd = parseFloat(data.high) + parseFloat(data.low);
+              rate_usd = rate_usd / 2;
+          client.get('http://api.bitcoinvenezuela.com/DolarToday.php?json=yes', function(data, response){
+            let rate_bitven = rate_usd * data.USD.dolartoday;
+            if($.message.from.first_name == "Doriam"){
+              botan.track($.message, 'User answer');
+              $.sendMessage("Hola, Mamaguevo! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.bid + "$ \n Precio de venta " + data.ask + "$ \n Precio Promedio " + rate_usd + "$");
+            }else{
+              botan.track($.message, 'User answer');
+              $.sendMessage("Hola, " + $.message.from.first_name + ", El precio Bitven actual es " + rate_bitven.toFixed(2) + " Bs. por 1 BTC");
+            }
+          });
+        });
+      },
+      '/kraken': () => {
+        client.get('https://api.kraken.com/0/public/Ticker?pair=BTCEUR', (data, response) => {
+          botan.track($.message, 'User answer');
+          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + data.result.XXBTZEUR.b[0].toFixed(2) + "€ \n Precio de venta " + data.result.XXBTZEUR.a[0].toFixed(2) + "€ \n Precio Promedio " + data.result.XXBTZEUR.c[0].toFixed(2) + "€");
+        });
+
+        client.get('https://api.kraken.com/0/public/Ticker?pair=XBTUSD', (data, response) => {
+          botan.track($.message, 'User answer');
+          $.sendMessage("USD: \n Precio de compra " + data.result.XXBTZUSD.b[0] + "€ \n Precio de venta " + data.result.XXBTZUSD.a[0].toFixed(2) + "€ \n Precio Promedio " + data.result.XXBTZUSD.c[0].toFixed(2) + "€");
+        });
+      },
+      '/kraken_ether': () => {
+        client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
+          botan.track($.message, 'User answer');
+          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + data.result.XETHZEUR.b[0] + "€ \n Precio de venta " + data.result.XETHZEUR.a[0].toFixed(2) + "€ \n Precio Promedio " + data.result.XETHZEUR.c[0].toFixed(2) + "€");
+        });
+
+        client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
+          botan.track($.message, 'User answer');
+          $.sendMessage("USD: \n Precio de compra " + data.result.XETHZUSD.b[0].toFixed(2) + "€ \n Precio de venta " + data.result.XETHZUSD.a[0].toFixed(2) + "€ \n Precio Promedio " + data.result.XETHZUSD.c[0].toFixed(2) + "€");
+        });
+      }
     });
   });
 });
@@ -129,6 +164,32 @@ tg.controller('PoloniexController', ($) => {
         $.sendMessage("Hola, un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc \n Gracias por usar el bot");
       });
     });
+});
+
+tg.controller('KrakenController', ($) => {
+  tg.for('/kraken', ($) => {
+    client.get('https://api.kraken.com/0/public/Ticker?pair=BTCEUR', (data, response) => {
+      botan.track($.message, 'User answer');
+      $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + data.result.XXBTZEUR.b[0].toFixed(2) + "€ \n Precio de venta " + data.result.XXBTZEUR.a[0].toFixed(2) + "€ \n Precio Promedio " + data.result.XXBTZEUR.c[0].toFixed(2) + "€");
+    });
+
+    client.get('https://api.kraken.com/0/public/Ticker?pair=XBTUSD', (data, response) => {
+      botan.track($.message, 'User answer');
+      $.sendMessage("USD: \n Precio de compra " + data.result.XXBTZUSD.b[0] + "€ \n Precio de venta " + data.result.XXBTZUSD.a[0].toFixed(2) + "€ \n Precio Promedio " + data.result.XXBTZUSD.c[0].toFixed(2) + "€");
+    });
+  });
+
+  tg.for('/kraken_ether', ($) => {
+    client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
+      botan.track($.message, 'User answer');
+      $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + data.result.XETHZEUR.b[0] + "€ \n Precio de venta " + data.result.XETHZEUR.a[0].toFixed(2) + "€ \n Precio Promedio " + data.result.XETHZEUR.c[0].toFixed(2) + "€");
+    });
+
+    client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
+      botan.track($.message, 'User answer');
+      $.sendMessage("USD: \n Precio de compra " + data.result.XETHZUSD.b[0].toFixed(2) + "€ \n Precio de venta " + data.result.XETHZUSD.a[0].toFixed(2) + "€ \n Precio Promedio " + data.result.XETHZUSD.c[0].toFixed(2) + "€");
+    });
+  });
 });
 
 tg.controller('ExchangeController', ($) => {
