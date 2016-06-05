@@ -1,14 +1,8 @@
 'use strict'
 
-var tg     = require('telegram-node-bot')/*('194307003:AAH_s2M1p1cnCIpF_fZsvR55RGKcCoyN938')*/('126466962:AAHa0NgrPi3WDV4j6A0bFk9zCrWePhbP3Lk')
-var Client = require("node-rest-client").Client;
-var client = new Client();
-
-var btcUSD = client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
-      var rate_usd = parseFloat(data.high) + parseFloat(data.low);
-      rate_usd = rate_usd / 2;
-      return rate_usd;
-  });
+const tg     = require('telegram-node-bot')/*('194307003:AAH_s2M1p1cnCIpF_fZsvR55RGKcCoyN938')*/('126466962:AAHa0NgrPi3WDV4j6A0bFk9zCrWePhbP3Lk')
+const Client = require("node-rest-client").Client;
+const client = new Client();
 
 tg.router.
     when(['/start'], 'StartController')
@@ -31,6 +25,15 @@ tg.router.
 
 tg.controller('StartController', ($) => {
   tg.for('/start', ($) => {
+    $.runMenu({
+    message: 'Select:',
+    layout: 2,
+    'Surbitcoin': () => {}, //will be on first line
+    'Bitfinex': () => {}, //will be on first line
+    'Ether': () => {}, //will be on second line
+    'DAO': () => {}, //will be on second line
+    'LISK': () => {}, //will be on third line
+})
     $.sendMessage("Bienvenido a Bitven Bot, Conoce el precio de bitcoin en tiempo real \n El bot posee los siguientes comandos: \n 1) /precio exchange_consultar, ejemplo: /precio bitfinex \n 2) /conversion de_a monto, ejemplo: /conversion btc_usd 2000 \n 3) /ether \n 4) /dao \n 5) /lisk \n Gracias por elegirnos :D");
   })
 });
@@ -57,7 +60,9 @@ tg.controller('PoloniexController', ($) => {
 
 tg.controller('ExchangeController', ($) => {
     tg.for('/precio :exchange', ($) => {
-      switch ($.query.exchange) {
+      var exchange = $.query.exchange;
+          exchange = exchange.toLowerCase();
+      switch (exchange) {
         case "surbitcoin":
           client.get('https://api.blinktrade.com/api/v1/VEF/ticker', function(data, response){
               data = JSON.parse(data);
@@ -101,8 +106,10 @@ tg.controller('ExchangeController', ($) => {
 
 tg.controller('ConvertController', ($) => {
     tg.for('/convert :type :amount', ($) => {
-      console.log($.query.type);
-        switch ($.query.type) {
+      var type = $.query.type;
+          type = type.toLowerCase();
+      console.log(type);
+        switch (type) {
           case "btc_vef":
             var monto = parseFloat($.query.amount);
 
@@ -156,7 +163,7 @@ tg.controller('ConvertController', ($) => {
             break
           case "btc_usd":
             var monto = parseFloat($.query.amount);
-            console.log(btcUSD);
+
             client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
                 var rate_usd = parseFloat(data.high) + parseFloat(data.low);
         				    rate_usd = rate_usd / 2;
