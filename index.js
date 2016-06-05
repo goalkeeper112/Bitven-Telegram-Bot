@@ -101,23 +101,23 @@ tg.controller('StartController', ($) => {
       '/kraken': () => {
         client.get('https://api.kraken.com/0/public/Ticker?pair=BTCEUR', (data, response) => {
           botan.track($.message, 'User answer');
-          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + data.result.XXBTZEUR.b[0] + "€ \n Precio de venta " + data.result.XXBTZEUR.a[0] + "€ \n Precio Promedio " + data.result.XXBTZEUR.c[0] + "€");
+          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XXBTZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XXBTZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XXBTZEUR.c[0]).toFixed(2) + "€");
         });
 
         client.get('https://api.kraken.com/0/public/Ticker?pair=XBTUSD', (data, response) => {
           botan.track($.message, 'User answer');
-          $.sendMessage("USD: \n Precio de compra " + data.result.XXBTZUSD.b[0] + "$ \n Precio de venta " + data.result.XXBTZUSD.a[0] + "$ \n Precio Promedio " + data.result.XXBTZUSD.c[0] + "$");
+          $.sendMessage("USD: \n Precio de compra " + parseFloat(data.result.XXBTZUSD.b[0]).toFixed(2) + "$ \n Precio de venta " + parseFloat(data.result.XXBTZUSD.a[0]).toFixed(2) + "$ \n Precio Promedio " + parseFloat(data.result.XXBTZUSD.c[0]).toFixed(2) + "$");
         });
       },
       '/kraken_ether': () => {
         client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
           botan.track($.message, 'User answer');
-          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + data.result.XETHZEUR.b[0] + "€ \n Precio de venta " + data.result.XETHZEUR.a[0] + "€ \n Precio Promedio " + data.result.XETHZEUR.c[0] + "€");
+          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XETHZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XETHZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XETHZEUR.c[0]).toFixed(2) + "€");
         });
 
         client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
           botan.track($.message, 'User answer');
-          $.sendMessage("USD: \n Precio de compra " + data.result.XETHZUSD.b[0] + "$ \n Precio de venta " + data.result.XETHZUSD.a[0] + "$ \n Precio Promedio " + data.result.XETHZUSD.c[0] + "$");
+          $.sendMessage("USD: \n Precio de compra " + parseFloat(data.result.XETHZUSD.b[0]).toFixed(2) + "$ \n Precio de venta " + parseFloat(data.result.XETHZUSD.a[0]).toFixed(2) + "$ \n Precio Promedio " + parseFloat(data.result.XETHZUSD.c[0]).toFixed(2) + "$");
         });
       }
     });
@@ -170,24 +170,24 @@ tg.controller('KrakenController', ($) => {
   tg.for('/kraken', ($) => {
     client.get('https://api.kraken.com/0/public/Ticker?pair=BTCEUR', (data, response) => {
       botan.track($.message, 'User answer');
-      $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + data.result.XXBTZEUR.b[0] + "€ \n Precio de venta " + data.result.XXBTZEUR.a[0] + "€ \n Precio Promedio " + data.result.XXBTZEUR.c[0] + "€");
+      $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XXBTZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XXBTZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XXBTZEUR.c[0]).toFixed(2) + "€");
     });
 
     client.get('https://api.kraken.com/0/public/Ticker?pair=XBTUSD', (data, response) => {
       botan.track($.message, 'User answer');
-      $.sendMessage("USD: \n Precio de compra " + data.result.XXBTZUSD.b[0] + "$ \n Precio de venta " + data.result.XXBTZUSD.a[0] + "$ \n Precio Promedio " + data.result.XXBTZUSD.c[0] + "$");
+      $.sendMessage("USD: \n Precio de compra " + parseFloat(data.result.XXBTZUSD.b[0]).toFixed(2) + "$ \n Precio de venta " + parseFloat(data.result.XXBTZUSD.a[0]).toFixed(2) + "$ \n Precio Promedio " + parseFloat(data.result.XXBTZUSD.c[0]).toFixed(2) + "$");
     });
   });
 
   tg.for('/kraken_ether', ($) => {
     client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
       botan.track($.message, 'User answer');
-      $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + data.result.XETHZEUR.b[0] + "€ \n Precio de venta " + data.result.XETHZEUR.a[0] + "€ \n Precio Promedio " + data.result.XETHZEUR.c[0] + "€");
+      $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XETHZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XETHZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XETHZEUR.c[0]).toFixed(2) + "€");
     });
 
     client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
       botan.track($.message, 'User answer');
-      $.sendMessage("USD: \n Precio de compra " + data.result.XETHZUSD.b[0] + "$ \n Precio de venta " + data.result.XETHZUSD.a[0] + "$ \n Precio Promedio " + data.result.XETHZUSD.c[0] + "$");
+      $.sendMessage("USD: \n Precio de compra " + parseFloat(data.result.XETHZUSD.b[0]).toFixed(2) + "$ \n Precio de venta " + parseFloat(data.result.XETHZUSD.a[0]).toFixed(2) + "$ \n Precio Promedio " + parseFloat(data.result.XETHZUSD.c[0]).toFixed(2) + "$");
     });
   });
 });
