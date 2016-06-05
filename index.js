@@ -106,7 +106,7 @@ tg.controller('StartController', ($) => {
 
         client.get('https://api.kraken.com/0/public/Ticker?pair=XBTUSD', (data, response) => {
           botan.track($.message, 'User answer');
-          $.sendMessage("USD: \n Precio de compra " + data.result.XXBTZUSD.b[0] + "€ \n Precio de venta " + data.result.XXBTZUSD.a[0] + "€ \n Precio Promedio " + data.result.XXBTZUSD.c[0] + "€");
+          $.sendMessage("USD: \n Precio de compra " + data.result.XXBTZUSD.b[0] + "$ \n Precio de venta " + data.result.XXBTZUSD.a[0] + "$ \n Precio Promedio " + data.result.XXBTZUSD.c[0] + "$");
         });
       },
       '/kraken_ether': () => {
@@ -117,7 +117,7 @@ tg.controller('StartController', ($) => {
 
         client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
           botan.track($.message, 'User answer');
-          $.sendMessage("USD: \n Precio de compra " + data.result.XETHZUSD.b[0] + "€ \n Precio de venta " + data.result.XETHZUSD.a[0] + "€ \n Precio Promedio " + data.result.XETHZUSD.c[0] + "€");
+          $.sendMessage("USD: \n Precio de compra " + data.result.XETHZUSD.b[0] + "$ \n Precio de venta " + data.result.XETHZUSD.a[0] + "$ \n Precio Promedio " + data.result.XETHZUSD.c[0] + "$");
         });
       }
     });
@@ -175,7 +175,7 @@ tg.controller('KrakenController', ($) => {
 
     client.get('https://api.kraken.com/0/public/Ticker?pair=XBTUSD', (data, response) => {
       botan.track($.message, 'User answer');
-      $.sendMessage("USD: \n Precio de compra " + data.result.XXBTZUSD.b[0] + "€ \n Precio de venta " + data.result.XXBTZUSD.a[0] + "€ \n Precio Promedio " + data.result.XXBTZUSD.c[0] + "€");
+      $.sendMessage("USD: \n Precio de compra " + data.result.XXBTZUSD.b[0] + "$ \n Precio de venta " + data.result.XXBTZUSD.a[0] + "$ \n Precio Promedio " + data.result.XXBTZUSD.c[0] + "$");
     });
   });
 
@@ -187,7 +187,7 @@ tg.controller('KrakenController', ($) => {
 
     client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
       botan.track($.message, 'User answer');
-      $.sendMessage("USD: \n Precio de compra " + data.result.XETHZUSD.b[0] + "€ \n Precio de venta " + data.result.XETHZUSD.a[0] + "€ \n Precio Promedio " + data.result.XETHZUSD.c[0] + "€");
+      $.sendMessage("USD: \n Precio de compra " + data.result.XETHZUSD.b[0] + "$ \n Precio de venta " + data.result.XETHZUSD.a[0] + "$ \n Precio Promedio " + data.result.XETHZUSD.c[0] + "$");
     });
   });
 });
