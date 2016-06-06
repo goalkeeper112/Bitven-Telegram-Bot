@@ -142,34 +142,6 @@ tg.controller('StartController', ($) => {
   });
 });
 
-tg.controller('GraficosController', ($) => {
-    tg.for('/grafico_bitfinex', ($) => {
-      capture({
-          dir: './captures',
-          output: 'capture_bitfinex.png',
-          url: 'http://bitcoinwisdom.com/markets/bitfinex/btcusd',
-          size: '1280x720',
-          screenTimer: 6000
-      }, function(err, results){
-          console.log(results);
-          $.sendPhoto(fs.createReadStream(results.fullPNGPath));
-      });
-    });
-
-    tg.for('/grafico_kraken', ($) => {
-      capture({
-          dir: './captures',
-          output: 'capture_kraken.png',
-          url: 'https://bitcoinwisdom.com/markets/kraken/btceur',
-          size: '1280x720',
-          screenTimer: 6000
-      }, function(err, results){
-          console.log(results);
-          $.sendPhoto(fs.createReadStream(results.fullPNGPath));
-      });
-    });
-});
-
 tg.controller('BitvenController', ($) => {
   tg.for('/bitven', ($) => {
     client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
@@ -527,3 +499,31 @@ tg.controller('ConvertController', ($) => {
         }
     })
 })
+
+tg.controller('GraficosController', ($) => {
+    tg.for('/grafico_bitfinex', ($) => {
+      capture({
+          dir: './captures',
+          output: 'capture_bitfinex.png',
+          url: 'http://bitcoinwisdom.com/markets/bitfinex/btcusd',
+          size: '1280x720',
+          screenTimer: 6000
+      }, function(err, results){
+          console.log(results);
+          $.sendPhoto(fs.createReadStream(results.fullPNGPath));
+      });
+    });
+
+    tg.for('/grafico_kraken', ($) => {
+      capture({
+          dir: './captures',
+          output: 'capture_kraken.png',
+          url: 'https://bitcoinwisdom.com/markets/kraken/btceur',
+          size: '1280x720',
+          screenTimer: 6000
+      }, function(err, results){
+          console.log(results);
+          $.sendPhoto(fs.createReadStream(results.fullPNGPath));
+      });
+    });
+});
