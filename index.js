@@ -152,7 +152,7 @@ tg.controller('GraficosController', ($) => {
           screenTimer: 6000
       }, function(err, results){
           console.log(results);
-          $.sendPhoto(fs.createReadStreamS(results.fullPNGPath));
+          $.sendPhoto(fs.createReadStream(results.fullPNGPath));
       });
     });
 
