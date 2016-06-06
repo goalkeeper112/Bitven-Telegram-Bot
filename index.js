@@ -1,6 +1,6 @@
 'use strict'
 
-const tg      = require('telegram-node-bot')(process.env.BITVEN_BOT)
+const tg      = require('telegram-node-bot')/*(process.env.BITVEN_BOT)*/("126466962:AAHa0NgrPi3WDV4j6A0bFk9zCrWePhbP3Lk")
 const Client  = require("node-rest-client").Client;
 const client  = new Client();
 const botan   = require('botanio')(":09oH2pUUirBAyAX_2tcc_8l7mevN8Ys");
