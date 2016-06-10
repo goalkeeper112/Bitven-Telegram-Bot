@@ -1,6 +1,6 @@
 'use strict'
 
-const tg      = require('telegram-node-bot')/*(process.env.BITVEN_BOT)*/("126466962:AAHa0NgrPi3WDV4j6A0bFk9zCrWePhbP3Lk")
+const tg      = require('telegram-node-bot')/*("194307003:AAH_s2M1p1cnCIpF_fZsvR55RGKcCoyN938")//(process.env.BITVEN_BOT)*/("126466962:AAHa0NgrPi3WDV4j6A0bFk9zCrWePhbP3Lk")
 const Client  = require("node-rest-client").Client;
 const client  = new Client();
 const botan   = require('botanio')(":09oH2pUUirBAyAX_2tcc_8l7mevN8Ys");
@@ -12,7 +12,7 @@ function numberWithCommas(x) {
 }
 
 tg.router.
-    when(['/start'], 'StartController')
+    when(['/start', '/lol'], 'StartController')
 
 tg.router.
     when(['/surbitcoin', '/bitfinex', '/foxbit'], 'ExchangeController')
@@ -39,14 +39,238 @@ tg.router.
     when(['/grafico_bitfinex', '/grafico_kraken'], 'GraficosController')
 
 tg.controller('StartController', ($) => {
+  tg.for('/lol', ($) => {
+    $.runInlineMenu('sendMessage', 'Conversiones Disponibles:', {}, [
+        {
+            text: 'BTC a USD',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'USD a BTC',
+            callback: ($) => {
+              tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+              tg.waitForRequest(($) => {
+
+              });
+            }
+        },
+        {
+            text: 'BTC a EUR',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'EUR a BTC',
+            callback: ($) => {
+              tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+              tg.waitForRequest(($) => {
+
+              });
+            }
+        },
+        {
+            text: 'BTC a VEF',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+                  client.get('https://api.blinktrade.com/api/v1/VEF/ticker', function(data, response){
+                    var monto = parseFloat($.message.text);
+                      data = JSON.parse(data);
+                      var rate_vef = parseFloat(data.high) + parseFloat(data.low);
+              				    rate_vef = rate_vef / 2;
+
+                      var result = monto * rate_vef;
+
+                      botan.track($.message, 'User answer');
+                      $.sendMessage("Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "Bs.");
+                  });
+                });
+            }
+        },
+        {
+            text: 'VEF a BTC',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+                  var monto = parseFloat($.message.text);
+
+                  client.get('https://api.blinktrade.com/api/v1/VEF/ticker', function(data, response){
+                      data = JSON.parse(data);
+                      var rate_vef = parseFloat(data.high) + parseFloat(data.low);
+              				    rate_vef = rate_vef / 2;
+
+                      var result = monto / rate_vef;
+
+                      botan.track($.message, 'User answer');
+                      $.sendMessage("Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "Bs.");
+                  });
+                });
+            }
+        },
+        {
+            text: 'BTC a BRL',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'BRL a BTC',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'BTC a ETHER',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'ETHER a BTC',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'ETHER a USD',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'USD a ETHER',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'ETHER a EUR',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'EUR a ETHER',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'BTC a DAO',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'DAO a BTC',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'DAO a USD',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'USD a DAO',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'BTC a LISK',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'LISK a BTC',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'LISK a USD',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+        {
+            text: 'USD a LISK',
+            callback: ($) => {
+                tg.sendMessage($.from.id, "Por Favor envia el monto a convertir: ");
+                tg.waitForRequest(($) => {
+
+                });
+            }
+        },
+    ], [2])
+  });
+
   tg.for('/start', ($) => {
     botan.track($.message, 'User answer');
-    $.sendMessage("Bienvenido a Bitven Bot, Conoce el precio de bitcoin en tiempo real \n El bot posee los siguientes comandos: \n 1) /exchange_consultar, ejemplo: /bitfinex /surbitcoin /foxbit \n 2) /convert de_a monto, ejemplo: /convert btc_usd 2000 \n 3) /ether \n 4) /dao \n 5) /lisk \n 6) /bitven \n Gracias por elegirnos :D");
+    $.sendMessage("Bienvenido a Dafcoin Bot, Conoce el precio de bitcoin en tiempo real \n El bot posee los siguientes comandos: \n 1) /exchange_consultar, ejemplo: /bitfinex /surbitcoin /foxbit \n 2) /convert de_a monto, ejemplo: /convert btc_usd 2000 \n 3) /ether \n 4) /dao \n 5) /lisk \n 6) /bitven \n Gracias por usarme, puedes hacerme alguna donación para mantener al bot funcionando y a su vez apoyar nuevos aportes a la comunidad a través de mi dirección 12GWmx5n8Dbo76Mw4AAJQXZGQD9yUhbr5i \n luisfernando.us");
 
     $.runMenu({
-      message: 'Select:',
+      message: 'Opciones disponibles: ',
       layout: 3,
-      '/surbitcoin': () => {
+      '\uD83D\uDE4C surbitcoin': () => {
         client.get('https://api.blinktrade.com/api/v1/VEF/ticker', function(data, response){
             data = JSON.parse(data);
             var rate_vef = parseFloat(data.high) + parseFloat(data.low);
@@ -55,7 +279,7 @@ tg.controller('StartController', ($) => {
             $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "Bs. \n Precio de venta " + numberWithCommas(data.sell) + "Bs. \n Precio Promedio " + numberWithCommas(rate_vef) + "Bs.");
         });
       },
-      '/bitfinex': () => {
+      '\uD83C\uDD71 bitfinex': () => {
         client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
           var rate_usd = parseFloat(data.high) + parseFloat(data.low);
               rate_usd = rate_usd / 2;
@@ -63,25 +287,25 @@ tg.controller('StartController', ($) => {
           $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.bid + "$ \n Precio de venta " + data.ask + "$ \n Precio Promedio " + rate_usd + "$");
         });
       },
-      '/ether': () => {
+      '\uD83C\uDD7F ether': () => {
         client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
           botan.track($.message, 'User answer');
           $.sendMessage("Hola, un ether cuesta lo siguiente: \n BTC: " + data.BTC_ETH.last + " btc \n Gracias por usar el bot");
         });
       },
-      '/dao': () => {
+      '\uD83C\uDD7F dao': () => {
         client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
           botan.track($.message, 'User answer');
           $.sendMessage("Hola, un DAO cuesta lo siguiente: \n BTC: " + data.BTC_DAO.last + " btc \n Gracias por usar el bot");
         });
       },
-      '/lisk': () => {
+      '\uD83C\uDD7F lisk': () => {
         client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
           botan.track($.message, 'User answer');
           $.sendMessage("Hola, un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc \n Gracias por usar el bot");
         });
       },
-      '/bitven': () => {
+      '\uD83C\uDD71 bitven': () => {
         client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
           var rate_usd = parseFloat(data.high) + parseFloat(data.low);
               rate_usd = rate_usd / 2;
@@ -92,7 +316,7 @@ tg.controller('StartController', ($) => {
           });
         });
       },
-      '/kraken': () => {
+      '\uD83D\uDE80 kraken': () => {
         client.get('https://api.kraken.com/0/public/Ticker?pair=BTCEUR', (data, response) => {
           botan.track($.message, 'User answer');
           $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XXBTZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XXBTZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XXBTZEUR.c[0]).toFixed(2) + "€");
@@ -103,7 +327,7 @@ tg.controller('StartController', ($) => {
           $.sendMessage("USD: \n Precio de compra " + parseFloat(data.result.XXBTZUSD.b[0]).toFixed(2) + "$ \n Precio de venta " + parseFloat(data.result.XXBTZUSD.a[0]).toFixed(2) + "$ \n Precio Promedio " + parseFloat(data.result.XXBTZUSD.c[0]).toFixed(2) + "$");
         });
       },
-      '/kraken_ether': () => {
+      '\uD83D\uDE80 kraken_ether': () => {
         client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
           botan.track($.message, 'User answer');
           $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XETHZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XETHZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XETHZEUR.c[0]).toFixed(2) + "€");
@@ -112,30 +336,6 @@ tg.controller('StartController', ($) => {
         client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
           botan.track($.message, 'User answer');
           $.sendMessage("USD: \n Precio de compra " + parseFloat(data.result.XETHZUSD.b[0]).toFixed(2) + "$ \n Precio de venta " + parseFloat(data.result.XETHZUSD.a[0]).toFixed(2) + "$ \n Precio Promedio " + parseFloat(data.result.XETHZUSD.c[0]).toFixed(2) + "$");
-        });
-      },
-      '/grafico_bitfinex': () => {
-        capture({
-            dir: './captures',
-            output: 'capture_bitfinex.png',
-            url: 'http://bitcoinwisdom.com/markets/bitfinex/btcusd',
-            size: '1280x720',
-            screenTimer: 6000
-        }, function(err, results){
-            console.log(results);
-            $.sendPhoto(fs.createReadStream(results.fullPNGPath));
-        });
-      },
-      '/grafico_kraken': () => {
-        capture({
-            dir: './captures',
-            output: 'capture_kraken.png',
-            url: 'https://bitcoinwisdom.com/markets/kraken/btceur',
-            size: '1280x720',
-            screenTimer: 6000
-        }, function(err, results){
-            console.log(results);
-            $.sendPhoto(fs.createReadStream(results.fullPNGPath));
         });
       }
     });
@@ -501,13 +701,16 @@ tg.controller('ConvertController', ($) => {
 })
 
 tg.controller('GraficosController', ($) => {
+    var random = Math.random();
     tg.for('/grafico_bitfinex', ($) => {
+      $.sendMessage("Por favor, espere, el gráfico se esta procesando");
+
       capture({
           dir: './captures',
-          output: 'capture_bitfinex.png',
+          output: random.toString() + '.png',
           url: 'http://bitcoinwisdom.com/markets/bitfinex/btcusd',
           size: '1280x720',
-          screenTimer: 6000
+          screenTimer: 8000
       }, function(err, results){
           console.log(results);
           $.sendPhoto(fs.createReadStream(results.fullPNGPath));
@@ -515,12 +718,14 @@ tg.controller('GraficosController', ($) => {
     });
 
     tg.for('/grafico_kraken', ($) => {
+      $.sendMessage("Por favor, espere, el gráfico se esta procesando");
+
       capture({
           dir: './captures',
-          output: 'capture_kraken.png',
+          output: random.toString() + '.png',
           url: 'https://bitcoinwisdom.com/markets/kraken/btceur',
           size: '1280x720',
-          screenTimer: 6000
+          screenTimer: 8000
       }, function(err, results){
           console.log(results);
           $.sendPhoto(fs.createReadStream(results.fullPNGPath));
