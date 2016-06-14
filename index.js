@@ -17,7 +17,7 @@ tg.router.
     when(['/start', '/lol'], 'StartController')
 
 tg.router.
-    when(['/surbitcoin', '/bitfinex', '/foxbit', '/argenbtc'], 'ExchangeController')
+    when(['/surbitcoin', '/bitfinex', '/foxbit', '/argenbtc', '/bitstamp'], 'ExchangeController')
 
 tg.router.
     when(['/kraken', '/kraken_ether'], 'KrakenController')
@@ -76,6 +76,9 @@ tg.controller('StartController', ($) => {
       '/argenbtc': () => {
         return controller.argenBTC($);
       },
+      '/bitstamp': () => {
+        return controller.bitstamp($);
+      },
       '/convert': () => {
         return inlineMenu.convertMenu($);
       }
@@ -132,6 +135,9 @@ tg.controller('ExchangeController', ($) => {
 
     tg.for('/foxbit', ($) => {
       return controller.foxbit($);
+    });
+    tg.for('/bitstamp': () => {
+      return controller.bitstamp($);
     });
 });
 
