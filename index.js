@@ -121,6 +121,13 @@ tg.controller('StartController', ($) => {
           $.sendMessage("USD: \n Precio de compra " + parseFloat(data.result.XETHZUSD.b[0]).toFixed(2) + "$ \n Precio de venta " + parseFloat(data.result.XETHZUSD.a[0]).toFixed(2) + "$ \n Precio Promedio " + parseFloat(data.result.XETHZUSD.c[0]).toFixed(2) + "$");
         });
       },
+      '/argenbtc': () => {
+        client.get('https://www.argenbtc.com/public/cotizacion_json.php', function(data, response){
+          botan.track($.message, 'User answer');
+          var data = JSON.parse(data);
+          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas de ArgenBTC son: \n Precio de compra: " + data.btc_compra  + " ARS \n Precio de venta: " + data.btc_venta + " ARS \n Precio Promedio: " + data.btc_promedio + " ARS \n Gracias por usar el bot!")
+        });
+      },
       '/convert': () => {
         $.runInlineMenu('sendMessage', 'Conversiones Disponibles:', {}, [
             {
