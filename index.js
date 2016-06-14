@@ -40,6 +40,12 @@ tg.router.
 
 tg.controller('StartController', ($) => {
 
+  tg.for('/lol', ($) => {
+    console.log($.user)
+    $.sendMessage($.user)
+
+  });
+
   tg.for('/start', ($) => {
     botan.track($.message, 'User answer');
     $.sendMessage("Bienvenido a Dafcoin Bot, Conoce el precio de bitcoin en tiempo real \n El bot posee los siguientes comandos: \n 1) /exchange_consultar, ejemplo: /bitfinex /surbitcoin /foxbit \n 2) /convert de_a monto, ejemplo: /convert btc_usd 2000 \n 3) /ether \n 4) /dao \n 5) /lisk \n 6) /bitven \n Gracias por usarme, puedes hacerme alguna donación para mantener al bot funcionando y a su vez apoyar nuevos aportes a la comunidad a través de mi dirección 12GWmx5n8Dbo76Mw4AAJQXZGQD9yUhbr5i \n luisfernando.us");
@@ -533,12 +539,34 @@ tg.controller('PoloniexController', ($) => {
         botan.track($.message, 'User answer');
         $.sendMessage("Hola, un DAO cuesta lo siguiente: \n BTC: " + data.BTC_DAO.last + " btc \n Gracias por usar el bot");
       });
+
+        client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
+          var result_dao = parseFloat(data.BTC_DAO.last);
+          client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
+            var rate_usd = parseFloat(data.high) + parseFloat(data.low);
+                rate_usd = rate_usd / 2;
+            var result_convert = result_dao * rate_usd;
+            botan.track($.message, 'User answer');
+            $.sendMessage("Hola, 1 DAO equivalen a " + result_convert.toFixed(2) + " $");
+          });
+        });
     });
 
     tg.for('/lisk', ($) => {
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
         botan.track($.message, 'User answer');
         $.sendMessage("Hola, un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc \n Gracias por usar el bot");
+      });
+
+      client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
+        var result_lsk = parseFloat(data.BTC_LSK.last);
+        client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
+          var rate_usd = parseFloat(data.high) + parseFloat(data.low);
+              rate_usd = rate_usd / 2;
+          var result_convert = result_lsk * rate_usd;
+          botan.track($.message, 'User answer');
+          $.sendMessage("Hola, 1 LSK equivalen a " + result_convert.toFixed(2) + " $");
+        });
       });
     });
 });
