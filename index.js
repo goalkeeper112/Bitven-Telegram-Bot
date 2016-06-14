@@ -15,7 +15,7 @@ tg.router.
     when(['/start', '/lol'], 'StartController')
 
 tg.router.
-    when(['/surbitcoin', '/bitfinex', '/foxbit', ':raised_hands:surbitcoin', '\uD83C\uDD71 bitfinex'], 'ExchangeController')
+    when(['/surbitcoin', '/bitfinex', '/foxbit', '/argenbtc'], 'ExchangeController')
 
 tg.router.
     when(['/kraken', '/kraken_ether'], 'KrakenController')
@@ -54,13 +54,14 @@ tg.controller('StartController', ($) => {
       message: 'Opciones disponibles: ',
       layout: 3,
       '/surbitcoin ': () => {
-        client.get('https://api.blinktrade.com/api/v1/VEF/ticker', function(data, response){
+        /*client.get('https://api.blinktrade.com/api/v1/VEF/ticker', function(data, response){
             data = JSON.parse(data);
             var rate_vef = parseFloat(data.high) + parseFloat(data.low);
                 rate_vef = rate_vef / 2;
             botan.track($.message, 'User answer');
             $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "Bs. \n Precio de venta " + numberWithCommas(data.sell) + "Bs. \n Precio Promedio " + numberWithCommas(rate_vef) + "Bs.");
-        });
+        });*/
+        $.routeTo('/surbitcoin');
       },
       '/bitfinex': () => {
         client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
@@ -537,7 +538,7 @@ tg.controller('PoloniexController', ($) => {
     tg.for('/dao', ($) => {
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
         botan.track($.message, 'User answer');
-        $.sendMessage("Hola, un DAO cuesta lo siguiente: \n BTC: " + data.BTC_DAO.last + " btc \n Gracias por usar el bot");
+        $.sendMessage("Hola, un DAO cuesta lo siguiente: \n BTC: " + data.BTC_DAO.last + " btc ");
       });
 
         client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
@@ -547,7 +548,7 @@ tg.controller('PoloniexController', ($) => {
                 rate_usd = rate_usd / 2;
             var result_convert = result_dao * rate_usd;
             botan.track($.message, 'User answer');
-            $.sendMessage("Hola, 1 DAO equivalen a " + result_convert.toFixed(2) + " $");
+            $.sendMessage("1 DAO equivalen a " + result_convert.toFixed(2) + " $ \n Gracias por usar el bot");
           });
         });
     });
@@ -555,7 +556,7 @@ tg.controller('PoloniexController', ($) => {
     tg.for('/lisk', ($) => {
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
         botan.track($.message, 'User answer');
-        $.sendMessage("Hola, un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc \n Gracias por usar el bot");
+        $.sendMessage("Hola, un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc");
       });
 
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
@@ -565,7 +566,7 @@ tg.controller('PoloniexController', ($) => {
               rate_usd = rate_usd / 2;
           var result_convert = result_lsk * rate_usd;
           botan.track($.message, 'User answer');
-          $.sendMessage("Hola, 1 LSK equivalen a " + result_convert.toFixed(2) + " $");
+          $.sendMessage("1 LSK equivalen a " + result_convert.toFixed(2) + " $ \n Gracias por usar el bot");
         });
       });
     });
@@ -598,6 +599,13 @@ tg.controller('KrakenController', ($) => {
 });
 
 tg.controller('ExchangeController', ($) => {
+    tg.for('/argenbtc', ($) => {
+      client.get('https://www.argenbtc.com/public/cotizacion_json.php', function(data, response){
+        botan.track($.message, 'User answer');
+        $.sendMessage("Hola, " + $.message.from.from.first_name + "! \n Las estadisticas de ArgenBTC son: \n Precio de compra: " + data.btc_compra  + " \n Precio de venta: " + data.btc_venta + " \n Precio Promedio: " + data.btc_promedio + " \n Gracias por usar el bot!")
+      });
+    });
+
     tg.for('/bitfinex', ($) => {
       client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
         var rate_usd = parseFloat(data.high) + parseFloat(data.low);
