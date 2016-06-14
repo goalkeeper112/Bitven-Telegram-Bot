@@ -602,6 +602,7 @@ tg.controller('ExchangeController', ($) => {
     tg.for('/argenbtc', ($) => {
       client.get('https://www.argenbtc.com/public/cotizacion_json.php', function(data, response){
         botan.track($.message, 'User answer');
+        var data = JSON.parse(data); 
         $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas de ArgenBTC son: \n Precio de compra: " + data.btc_compra  + " \n Precio de venta: " + data.btc_venta + " \n Precio Promedio: " + data.btc_promedio + " \n Gracias por usar el bot!")
       });
     });
