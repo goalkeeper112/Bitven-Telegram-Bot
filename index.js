@@ -77,7 +77,7 @@ tg.controller('StartController', ($) => {
         return controller.argenBTC($);
       },
       '/convert': () => {
-        return inlineMenu.convertMenu(tg, $);
+        return inlineMenu.convertMenu($);
       }
     });
   });
