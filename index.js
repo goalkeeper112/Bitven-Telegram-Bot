@@ -54,14 +54,13 @@ tg.controller('StartController', ($) => {
       message: 'Opciones disponibles: ',
       layout: 3,
       '/surbitcoin ': () => {
-        /*client.get('https://api.blinktrade.com/api/v1/VEF/ticker', function(data, response){
+        client.get('https://api.blinktrade.com/api/v1/VEF/ticker', function(data, response){
             data = JSON.parse(data);
             var rate_vef = parseFloat(data.high) + parseFloat(data.low);
                 rate_vef = rate_vef / 2;
             botan.track($.message, 'User answer');
             $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "Bs. \n Precio de venta " + numberWithCommas(data.sell) + "Bs. \n Precio Promedio " + numberWithCommas(rate_vef) + "Bs.");
-        });*/
-        $.routeTo('/surbitcoin');
+        });
       },
       '/bitfinex': () => {
         client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
@@ -602,8 +601,8 @@ tg.controller('ExchangeController', ($) => {
     tg.for('/argenbtc', ($) => {
       client.get('https://www.argenbtc.com/public/cotizacion_json.php', function(data, response){
         botan.track($.message, 'User answer');
-        var data = JSON.parse(data); 
-        $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas de ArgenBTC son: \n Precio de compra: " + data.btc_compra  + " \n Precio de venta: " + data.btc_venta + " \n Precio Promedio: " + data.btc_promedio + " \n Gracias por usar el bot!")
+        var data = JSON.parse(data);
+        $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas de ArgenBTC son: \n Precio de compra: " + data.btc_compra  + " ARS \n Precio de venta: " + data.btc_venta + " ARS \n Precio Promedio: " + data.btc_promedio + " ARS \n Gracias por usar el bot!")
       });
     });
 
