@@ -582,7 +582,7 @@ tg.controller('PoloniexController', ($) => {
       });
     });
 
-    tg.for('/hallaca', ($) => {
+    tg.for('/hallacas', ($) => {
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
         botan.track($.message, 'User answer');
         $.sendMessage("Hola, un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc");
