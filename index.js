@@ -136,7 +136,7 @@ tg.controller('ExchangeController', ($) => {
     tg.for('/foxbit', ($) => {
       return controller.foxbit($);
     });
-    tg.for('/bitstamp' () => {
+    tg.for('/bitstamp', () => {
       return controller.bitstamp($);
     });
 });
