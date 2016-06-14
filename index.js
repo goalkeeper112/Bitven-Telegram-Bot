@@ -53,7 +53,7 @@ tg.controller('StartController', ($) => {
             var rate_vef = parseFloat(data.high) + parseFloat(data.low);
                 rate_vef = rate_vef / 2;
             botan.track($.message, 'User answer');
-            $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "Bs. \n Precio de venta " + numberWithCommas(data.sell) + "Bs. \n Precio Promedio " + numberWithCommas(rate_vef) + "Bs.");
+            $.sendMessage("Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "Bs. \n Precio de venta " + numberWithCommas(data.sell) + "Bs. \n Precio Promedio " + numberWithCommas(rate_vef) + "Bs.");
         });
       },
       '/bitfinex': () => {
@@ -61,25 +61,25 @@ tg.controller('StartController', ($) => {
           var rate_usd = parseFloat(data.high) + parseFloat(data.low);
               rate_usd = rate_usd / 2;
           botan.track($.message, 'User answer');
-          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.bid + "$ \n Precio de venta " + data.ask + "$ \n Precio Promedio " + rate_usd + "$");
+          $.sendMessage("Las estadisticas son las siguientes:  \n Precio de compra " + data.bid + "$ \n Precio de venta " + data.ask + "$ \n Precio Promedio " + rate_usd + "$");
         });
       },
       '/ether': () => {
         client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
           botan.track($.message, 'User answer');
-          $.sendMessage("Hola, un ether cuesta lo siguiente: \n BTC: " + data.BTC_ETH.last + " btc \n Gracias por usar el bot");
+          $.sendMessage("Un ether cuesta lo siguiente: \n BTC: " + data.BTC_ETH.last + " btc \n Gracias por usar el bot");
         });
       },
       '/dao': () => {
         client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
           botan.track($.message, 'User answer');
-          $.sendMessage("Hola, un DAO cuesta lo siguiente: \n BTC: " + data.BTC_DAO.last + " btc \n Gracias por usar el bot");
+          $.sendMessage("Un DAO cuesta lo siguiente: \n BTC: " + data.BTC_DAO.last + " btc \n Gracias por usar el bot");
         });
       },
       '/lisk': () => {
         client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
           botan.track($.message, 'User answer');
-          $.sendMessage("Hola, un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc \n Gracias por usar el bot");
+          $.sendMessage("Un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc \n Gracias por usar el bot");
         });
       },
       '/bitven': () => {
@@ -89,14 +89,14 @@ tg.controller('StartController', ($) => {
           client.get('http://api.bitcoinvenezuela.com/DolarToday.php?json=yes', function(data, response){
             let rate_bitven = rate_usd * data.USD.dolartoday;
             botan.track($.message, 'User answer');
-            $.sendMessage("Hola, " + $.message.from.first_name + ", El precio Bitven actual es " + rate_bitven.toFixed(2) + " Bs. por 1 BTC");
+            $.sendMessage(", El precio Bitven actual es " + rate_bitven.toFixed(2) + " Bs. por 1 BTC");
           });
         });
       },
       '/kraken': () => {
         client.get('https://api.kraken.com/0/public/Ticker?pair=BTCEUR', (data, response) => {
           botan.track($.message, 'User answer');
-          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XXBTZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XXBTZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XXBTZEUR.c[0]).toFixed(2) + "€");
+          $.sendMessage("Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XXBTZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XXBTZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XXBTZEUR.c[0]).toFixed(2) + "€");
         });
 
         client.get('https://api.kraken.com/0/public/Ticker?pair=XBTUSD', (data, response) => {
@@ -107,7 +107,7 @@ tg.controller('StartController', ($) => {
       '/kraken_ether': () => {
         client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
           botan.track($.message, 'User answer');
-          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XETHZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XETHZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XETHZEUR.c[0]).toFixed(2) + "€");
+          $.sendMessage("Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XETHZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XETHZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XETHZEUR.c[0]).toFixed(2) + "€");
         });
 
         client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
@@ -119,7 +119,7 @@ tg.controller('StartController', ($) => {
         client.get('https://www.argenbtc.com/public/cotizacion_json.php', function(data, response){
           botan.track($.message, 'User answer');
           var data = JSON.parse(data);
-          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas de ArgenBTC son: \n Precio de compra: " + data.btc_compra  + " ARS \n Precio de venta: " + data.btc_venta + " ARS \n Precio Promedio: " + data.btc_promedio + " ARS \n Gracias por usar el bot!")
+          $.sendMessage("Las estadisticas de ArgenBTC son: \n Precio de compra: " + data.btc_compra  + " ARS \n Precio de venta: " + data.btc_venta + " ARS \n Precio Promedio: " + data.btc_promedio + " ARS \n Gracias por usar el bot!")
         });
       },
       '/convert': () => {
@@ -138,7 +138,7 @@ tg.controller('StartController', ($) => {
                           var result = monto * rate_usd;
 
                           botan.track($.message, 'User answer');
-                          $.sendMessage("Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "$");
+                          $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "$");
                       });
                     });
                 }
@@ -157,7 +157,7 @@ tg.controller('StartController', ($) => {
                         var result = monto / rate_usd;
 
                         botan.track($.message, 'User answer');
-                        $.sendMessage("Hola, " + monto + " $ equivalen a " + result.toFixed(2) + "BTC");
+                        $.sendMessage("" + monto + " $ equivalen a " + result.toFixed(2) + "BTC");
                     });
                   });
                 }
@@ -206,7 +206,7 @@ tg.controller('StartController', ($) => {
                             var result = monto * rate_vef;
 
                             botan.track($.message, 'User answer');
-                            $.sendMessage("Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "Bs.");
+                            $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "Bs.");
                         });
                       }
                     });
@@ -228,7 +228,7 @@ tg.controller('StartController', ($) => {
                           var result = monto / rate_vef;
 
                           botan.track($.message, 'User answer');
-                          $.sendMessage("Hola, " + monto + " Bs. equivalen a " + result.toFixed(2) + "BTC");
+                          $.sendMessage("" + monto + " Bs. equivalen a " + result.toFixed(2) + "BTC");
                       });
                     }
                   });
@@ -249,7 +249,7 @@ tg.controller('StartController', ($) => {
                           var result = monto * rate_brl;
 
                           botan.track($.message, 'User answer');
-                          $.sendMessage("Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "R$");
+                          $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "R$");
                       });
                     });
                 }
@@ -271,7 +271,7 @@ tg.controller('StartController', ($) => {
                             var result = monto / rate_brl;
 
                             botan.track($.message, 'User answer');
-                            $.sendMessage("Hola, " + monto + " R$ equivalen a " + result.toFixed(2) + "BTC");
+                            $.sendMessage("" + monto + " R$ equivalen a " + result.toFixed(2) + "BTC");
                         });
                       });
                     });
@@ -287,7 +287,7 @@ tg.controller('StartController', ($) => {
                       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                         var result_ether = monto / parseFloat(data.BTC_ETH.last);
                         botan.track($.message, 'User answer');
-                        $.sendMessage("Hola, " + monto + " btc equivalen a " + result_ether.toFixed(8) + " ETH");
+                        $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " ETH");
                       });
                     });
                 }
@@ -302,7 +302,7 @@ tg.controller('StartController', ($) => {
                       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                         var result_ether = monto * parseFloat(data.BTC_ETH.last);
                         botan.track($.message, 'User answer');
-                        $.sendMessage("Hola, " + monto + " ETH equivalen a " + result_ether.toFixed(8) + " BTC");
+                        $.sendMessage("" + monto + " ETH equivalen a " + result_ether.toFixed(8) + " BTC");
                       });
                     });
                 }
@@ -317,7 +317,7 @@ tg.controller('StartController', ($) => {
                       client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
                         botan.track($.message, 'User answer');
                         var result = monto * parseFloat(data.result.XETHZUSD.c[0]);
-                        $.sendMessage("Hola, " + monto + " eth equivalen a " + result + "$");
+                        $.sendMessage("" + monto + " eth equivalen a " + result + "$");
                       });
                     });
                 }
@@ -332,7 +332,7 @@ tg.controller('StartController', ($) => {
                       client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
                         botan.track($.message, 'User answer');
                         var result = monto / parseFloat(data.result.XETHZUSD.c[0]);
-                        $.sendMessage("Hola, " + monto + " $ equivalen a " + result + "ETH");
+                        $.sendMessage("" + monto + " $ equivalen a " + result + "ETH");
                       });
                     });
                 }
@@ -347,7 +347,7 @@ tg.controller('StartController', ($) => {
                       client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
                         botan.track($.message, 'User answer');
                         var result = monto * parseFloat(data.result.XETHZEUR.c[0]);
-                        $.sendMessage("Hola, " + monto + " ETH equivalen a " + result + "");
+                        $.sendMessage("" + monto + " ETH equivalen a " + result + "");
                       });
                     });
                 }
@@ -362,7 +362,7 @@ tg.controller('StartController', ($) => {
                       client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
                         botan.track($.message, 'User answer');
                         var result = monto / parseFloat(data.result.XETHZEUR.c[0]);
-                        $.sendMessage("Hola, " + monto + "  equivalen a " + result + "ETH");
+                        $.sendMessage("" + monto + "  equivalen a " + result + "ETH");
                       });
                     });
                 }
@@ -377,7 +377,7 @@ tg.controller('StartController', ($) => {
                       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                         var result_ether = monto / parseFloat(data.BTC_DAO.last);
                         botan.track($.message, 'User answer');
-                        $.sendMessage("Hola, " + monto + " btc equivalen a " + result_ether.toFixed(8) + " DAO");
+                        $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " DAO");
                       });
                     });
                 }
@@ -392,7 +392,7 @@ tg.controller('StartController', ($) => {
                       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                         var result_ether = monto * parseFloat(data.BTC_DAO.last);
                         botan.track($.message, 'User answer');
-                        $.sendMessage("Hola, " + monto + " DAO equivalen a " + result_ether.toFixed(8) + " BTC");
+                        $.sendMessage("" + monto + " DAO equivalen a " + result_ether.toFixed(8) + " BTC");
                       });
                     });
                 }
@@ -411,7 +411,7 @@ tg.controller('StartController', ($) => {
                               rate_usd = rate_usd / 2;
                           var result_convert = result_dao * rate_usd;
                           botan.track($.message, 'User answer');
-                          $.sendMessage("Hola, " + monto + " DAO equivalen a " + result_convert.toFixed(2) + " $");
+                          $.sendMessage("" + monto + " DAO equivalen a " + result_convert.toFixed(2) + " $");
                         });
                       });
                     });
@@ -431,7 +431,7 @@ tg.controller('StartController', ($) => {
                               rate_usd = rate_usd / 2;
                           var result_convert = result_dao / rate_usd;
                           botan.track($.message, 'User answer');
-                          $.sendMessage("Hola, " + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
+                          $.sendMessage("" + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
                         });
                       });
                     });
@@ -447,7 +447,7 @@ tg.controller('StartController', ($) => {
                       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                         var result_ether = monto / parseFloat(data.BTC_LSK.last);
                         botan.track($.message, 'User answer');
-                        $.sendMessage("Hola, " + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
+                        $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
                       });
                     });
                 }
@@ -462,7 +462,7 @@ tg.controller('StartController', ($) => {
                       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                         var result_ether = monto * parseFloat(data.BTC_LSK.last);
                         botan.track($.message, 'User answer');
-                        $.sendMessage("Hola, " + monto + " LSK equivalen a " + result_ether.toFixed(8) + " BTC");
+                        $.sendMessage("" + monto + " LSK equivalen a " + result_ether.toFixed(8) + " BTC");
                       });
                     });
                 }
@@ -481,7 +481,7 @@ tg.controller('StartController', ($) => {
                               rate_usd = rate_usd / 2;
                           var result_convert = result_lsk * rate_usd;
                           botan.track($.message, 'User answer');
-                          $.sendMessage("Hola, " + monto + " LSK equivalen a " + result_convert.toFixed(2) + " $");
+                          $.sendMessage("" + monto + " LSK equivalen a " + result_convert.toFixed(2) + " $");
                         });
                       });
                     });
@@ -501,7 +501,7 @@ tg.controller('StartController', ($) => {
                               rate_usd = rate_usd / 2;
                           var result_convert = result_lsk / rate_usd;
                           botan.track($.message, 'User answer');
-                          $.sendMessage("Hola, " + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
+                          $.sendMessage("" + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
                         });
                       });
                     });
@@ -521,7 +521,7 @@ tg.controller('BitvenController', ($) => {
       client.get('http://api.bitcoinvenezuela.com/DolarToday.php?json=yes', function(data, response){
         let rate_bitven = rate_usd * data.USD.dolartoday;
         botan.track($.message, 'User answer');
-        $.sendMessage("Hola, " + $.message.from.first_name + ", El precio Bitven actual es " + rate_bitven.toFixed(2) + " Bs. por 1 BTC");
+        $.sendMessage(", El precio Bitven actual es " + rate_bitven.toFixed(2) + " Bs. por 1 BTC");
       });
     });
   });
@@ -531,7 +531,7 @@ tg.controller('PoloniexController', ($) => {
     tg.for('/ether', ($) => {
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
         botan.track($.message, 'User answer');
-        $.sendMessage("Hola, un ether cuesta lo siguiente: \n BTC: " + data.BTC_ETH.last + " btc");
+        $.sendMessage("Un ether cuesta lo siguiente: \n BTC: " + data.BTC_ETH.last + " Ƀ");
       });
 
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
@@ -549,7 +549,7 @@ tg.controller('PoloniexController', ($) => {
     tg.for('/dao', ($) => {
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
         botan.track($.message, 'User answer');
-        $.sendMessage("Hola, un DAO cuesta lo siguiente: \n BTC: " + data.BTC_DAO.last + " btc ");
+        $.sendMessage("Un DAO cuesta lo siguiente: \n BTC: " + data.BTC_DAO.last + " btc ");
       });
 
         client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
@@ -567,7 +567,7 @@ tg.controller('PoloniexController', ($) => {
     tg.for('/lisk', ($) => {
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
         botan.track($.message, 'User answer');
-        $.sendMessage("Hola, un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc");
+        $.sendMessage("Un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " Ƀ");
       });
 
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
@@ -585,7 +585,7 @@ tg.controller('PoloniexController', ($) => {
     tg.for('/hallacas', ($) => {
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
         botan.track($.message, 'User answer');
-        $.sendMessage("Hola, un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc");
+        $.sendMessage("Un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " Ƀ");
       });
 
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
@@ -605,7 +605,7 @@ tg.controller('KrakenController', ($) => {
   tg.for('/kraken', ($) => {
     client.get('https://api.kraken.com/0/public/Ticker?pair=BTCEUR', (data, response) => {
       botan.track($.message, 'User answer');
-      $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XXBTZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XXBTZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XXBTZEUR.c[0]).toFixed(2) + "€");
+      $.sendMessage("Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XXBTZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XXBTZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XXBTZEUR.c[0]).toFixed(2) + "€");
     });
 
     client.get('https://api.kraken.com/0/public/Ticker?pair=XBTUSD', (data, response) => {
@@ -617,7 +617,7 @@ tg.controller('KrakenController', ($) => {
   tg.for('/kraken_ether', ($) => {
     client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
       botan.track($.message, 'User answer');
-      $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XETHZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XETHZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XETHZEUR.c[0]).toFixed(2) + "€");
+      $.sendMessage("Las estadisticas en EUR son las siguientes:  \n Precio de compra " + parseFloat(data.result.XETHZEUR.b[0]).toFixed(2) + "€ \n Precio de venta " + parseFloat(data.result.XETHZEUR.a[0]).toFixed(2) + "€ \n Precio Promedio " + parseFloat(data.result.XETHZEUR.c[0]).toFixed(2) + "€");
     });
 
     client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
@@ -632,7 +632,7 @@ tg.controller('ExchangeController', ($) => {
       client.get('https://www.argenbtc.com/public/cotizacion_json.php', function(data, response){
         botan.track($.message, 'User answer');
         var data = JSON.parse(data);
-        $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas de ArgenBTC son: \n Precio de compra: " + data.btc_compra  + " ARS \n Precio de venta: " + data.btc_venta + " ARS \n Precio Promedio: " + data.btc_promedio + " ARS \n Gracias por usar el bot!")
+        $.sendMessage("Las estadisticas de ArgenBTC son: \n Precio de compra: " + data.btc_compra  + " ARS \n Precio de venta: " + data.btc_venta + " ARS \n Precio Promedio: " + data.btc_promedio + " ARS \n Gracias por usar el bot!")
       });
     });
 
@@ -641,7 +641,7 @@ tg.controller('ExchangeController', ($) => {
         var rate_usd = parseFloat(data.high) + parseFloat(data.low);
             rate_usd = rate_usd / 2;
         botan.track($.message, 'User answer');
-        $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + data.bid + "$ \n Precio de venta " + data.ask + "$ \n Precio Promedio " + rate_usd + "$");
+        $.sendMessage("Las estadisticas son las siguientes:  \n Precio de compra " + data.bid + "$ \n Precio de venta " + data.ask + "$ \n Precio Promedio " + rate_usd + "$");
       });
     });
 
@@ -651,7 +651,7 @@ tg.controller('ExchangeController', ($) => {
           var rate_vef = parseFloat(data.high) + parseFloat(data.low);
               rate_vef = rate_vef / 2;
           botan.track($.message, 'User answer');
-          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "Bs. \n Precio de venta " + numberWithCommas(data.sell) + "Bs. \n Precio Promedio " + numberWithCommas(rate_vef) + "Bs.");
+          $.sendMessage("Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "Bs. \n Precio de venta " + numberWithCommas(data.sell) + "Bs. \n Precio Promedio " + numberWithCommas(rate_vef) + "Bs.");
       });
     });
 
@@ -661,7 +661,7 @@ tg.controller('ExchangeController', ($) => {
           var rate_brl = parseFloat(data.high) + parseFloat(data.low);
               rate_brl = rate_brl / 2;
           botan.track($.message, 'User answer');
-          $.sendMessage("Hola, " + $.message.from.first_name + "! \n Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "R$ \n Precio de venta " + numberWithCommas(data.sell) + "R$ \n Precio Promedio " + rate_brl + "R$");
+          $.sendMessage("Las estadisticas son las siguientes:  \n Precio de compra " + numberWithCommas(data.buy) + "R$ \n Precio de venta " + numberWithCommas(data.sell) + "R$ \n Precio Promedio " + rate_brl + "R$");
       });
     });
 });
@@ -683,10 +683,10 @@ tg.controller('ConvertController', ($) => {
                 var result = monto * rate_vef;
 
                 botan.track($.message, 'User answer');
-                $.sendMessage("Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "Bs.");
+                $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "Bs.");
             });
             break;
-          case "vef_btc":
+          case "Ƀ":
             var monto = parseFloat($.query.amount);
 
             client.get('https://api.blinktrade.com/api/v1/VEF/ticker', function(data, response){
@@ -697,7 +697,7 @@ tg.controller('ConvertController', ($) => {
                 var result = monto / rate_vef;
 
                 botan.track($.message, 'User answer');
-                $.sendMessage("Hola, " + monto + " Bs. equivalen a " + result.toFixed(8) + " BTC");
+                $.sendMessage("" + monto + " Bs. equivalen a " + result.toFixed(8) + " BTC");
             });
             break;
           case "btc_brl":
@@ -711,10 +711,10 @@ tg.controller('ConvertController', ($) => {
                 var result = monto * rate_brl;
 
                 botan.track($.message, 'User answer');
-                $.sendMessage("Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "R$");
+                $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "R$");
             });
             break;
-          case "brl_btc":
+          case "Ƀ":
             var monto = parseFloat($.query.amount);
             client.get('https://api.blinktrade.com/api/v1/BRL/ticker', function(data, response){
                 data = JSON.parse(data);
@@ -724,7 +724,7 @@ tg.controller('ConvertController', ($) => {
                 var result = monto / rate_brl;
 
                 botan.track($.message, 'User answer');
-                $.sendMessage("Hola, " + monto + " R$ equivalen a " + result.toFixed(8) + " BTC");
+                $.sendMessage("" + monto + " R$ equivalen a " + result.toFixed(8) + " BTC");
             });
             break
           case "btc_usd":
@@ -737,10 +737,10 @@ tg.controller('ConvertController', ($) => {
                 var result = monto * rate_usd;
 
                 botan.track($.message, 'User answer');
-                $.sendMessage("Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "$");
+                $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "$");
             });
             break;
-          case "usd_btc":
+          case "Ƀ":
             var monto = parseFloat($.query.amount);
 
             client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
@@ -750,7 +750,7 @@ tg.controller('ConvertController', ($) => {
                 var result = monto / rate_usd;
 
                 botan.track($.message, 'User answer');
-                $.sendMessage("Hola, " + monto + " $ equivalen a " + result.toFixed(8) + " BTC");
+                $.sendMessage("" + monto + " $ equivalen a " + result.toFixed(8) + " BTC");
             });
             break;
           case "btc_eur":
@@ -761,7 +761,7 @@ tg.controller('ConvertController', ($) => {
               $.sendMessage("Hola," + monto + " BTC equivalen a " + result.toFixed(2) + " €");
             });
             break;
-          case "eur_btc":
+          case "Ƀ":
             var monto = parseFloat($.query.amount);
             client.get('https://api.kraken.com/0/public/Ticker?pair=BTCEUR', (data, response) => {
               var result =  monto / parseFloat(data.result.XXBTZEUR.c[0])
@@ -775,17 +775,17 @@ tg.controller('ConvertController', ($) => {
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_ether = monto / parseFloat(data.BTC_ETH.last);
               botan.track($.message, 'User answer');
-              $.sendMessage("Hola, " + monto + " btc equivalen a " + result_ether.toFixed(8) + " ETH");
+              $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " ETH");
             });
 
             break;
-          case "ether_btc":
+          case "Ƀ":
             var monto = parseFloat($.query.amount);
 
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_ether = monto * parseFloat(data.BTC_ETH.last);
               botan.track($.message, 'User answer');
-              $.sendMessage("Hola, " + monto + " eth equivalen a " + result_ether.toFixed(8) + " btc");
+              $.sendMessage("" + monto + " eth equivalen a " + result_ether.toFixed(8) + " Ƀ");
             });
 
             break;
@@ -795,7 +795,7 @@ tg.controller('ConvertController', ($) => {
             client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
               botan.track($.message, 'User answer');
               var result = monto * parseFloat(data.result.XETHZUSD.c[0]);
-              $.sendMessage("Hola, " + monto + " eth equivalen a " + result + "$");
+              $.sendMessage("" + monto + " eth equivalen a " + result + "$");
             });
             break;
           case "usd_ether":
@@ -804,7 +804,7 @@ tg.controller('ConvertController', ($) => {
             client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
               botan.track($.message, 'User answer');
               var result = monto / parseFloat(data.result.XETHZUSD.c[0]);
-              $.sendMessage("Hola, " + monto + " $ equivalen a " + result.toFixed(4) + " eth");
+              $.sendMessage("" + monto + " $ equivalen a " + result.toFixed(4) + " eth");
             });
             break;
           case "ether_eur":
@@ -812,7 +812,7 @@ tg.controller('ConvertController', ($) => {
             client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
               botan.track($.message, 'User answer');
               var result = monto * parseFloat(data.result.XETHZEUR.c[0]);
-              $.sendMessage("Hola, " + monto + " eth equivalen a " + result + " €");
+              $.sendMessage("" + monto + " eth equivalen a " + result + " €");
             });
             break;
           case "eur_ether":
@@ -820,7 +820,7 @@ tg.controller('ConvertController', ($) => {
             client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
               botan.track($.message, 'User answer');
               var result = monto / parseFloat(data.result.XETHZEUR.c[0]);
-              $.sendMessage("Hola, " + monto + " € equivalen a " + result.toFixed(4) + " eth");
+              $.sendMessage("" + monto + " € equivalen a " + result.toFixed(4) + " eth");
             });
             break;
           case "btc_dao":
@@ -829,17 +829,17 @@ tg.controller('ConvertController', ($) => {
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_ether = monto / parseFloat(data.BTC_DAO.last);
               botan.track($.message, 'User answer');
-              $.sendMessage("Hola, " + monto + " btc equivalen a " + result_ether.toFixed(8) + " DAO");
+              $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " DAO");
             });
 
             break;
-          case "dao_btc":
+          case "Ƀ":
             var monto = parseFloat($.query.amount);
 
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_dao = monto * parseFloat(data.BTC_DAO.last);
               botan.track($.message, 'User answer');
-              $.sendMessage("Hola, " + monto + " dao equivalen a " + result_dao.toFixed(8) + " btc");
+              $.sendMessage("" + monto + " dao equivalen a " + result_dao.toFixed(8) + " Ƀ");
             });
 
             break;
@@ -853,7 +853,7 @@ tg.controller('ConvertController', ($) => {
                     rate_usd = rate_usd / 2;
                 var result_convert = result_dao * rate_usd;
                 botan.track($.message, 'User answer');
-                $.sendMessage("Hola, " + monto + " DAO equivalen a " + result_convert.toFixed(2) + " $");
+                $.sendMessage("" + monto + " DAO equivalen a " + result_convert.toFixed(2) + " $");
               });
             });
             break;
@@ -870,7 +870,7 @@ tg.controller('ConvertController', ($) => {
                 var result_convert = rate_usd / result_dao;
                 console.log(result_convert)
                 botan.track($.message, 'User answer');
-                $.sendMessage("Hola, " + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
+                $.sendMessage("" + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
               });
             });
             break;
@@ -880,17 +880,17 @@ tg.controller('ConvertController', ($) => {
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_ether = monto / parseFloat(data.BTC_LSK.last);
               botan.track($.message, 'User answer');
-              $.sendMessage("Hola, " + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
+              $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
             });
 
             break;
-          case "lisk_btc":
+          case "Ƀ":
             var monto = parseFloat($.query.amount);
 
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_ether = monto * parseFloat(data.BTC_LSK.last);
               botan.track($.message, 'User answer');
-              $.sendMessage("Hola, " + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
+              $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
             });
 
             break;
@@ -904,7 +904,7 @@ tg.controller('ConvertController', ($) => {
                     rate_usd = rate_usd / 2;
                 var result_convert = result_lsk * rate_usd;
                 botan.track($.message, 'User answer');
-                $.sendMessage("Hola, " + monto + " LSK equivalen a " + result_convert.toFixed(2) + " $");
+                $.sendMessage("" + monto + " LSK equivalen a " + result_convert.toFixed(2) + " $");
               });
             });
             break;
@@ -921,13 +921,13 @@ tg.controller('ConvertController', ($) => {
                 var result_convert = rate_usd / result_lsk;
                 console.log(result_convert)
                 botan.track($.message, 'User answer');
-                $.sendMessage("Hola, " + monto + " $ equivalen a " + result_convert.toFixed(2) + " LSK");
+                $.sendMessage("" + monto + " $ equivalen a " + result_convert.toFixed(2) + " LSK");
               });
             });
             break;
           default:
             botan.track($.message, 'User answer');
-            $.sendMessage("Hola, No reconozco ese comando, por favor envia /start para conocer las instrucciones");
+            $.sendMessage("No reconozco ese comando, por favor envia /start para conocer las instrucciones");
             $.runInlineMenu('sendMessage', 'Conversiones Disponibles:', {}, [
                 {
                     text: 'BTC a USD',
@@ -943,7 +943,7 @@ tg.controller('ConvertController', ($) => {
                               var result = monto * rate_usd;
 
                               botan.track($.message, 'User answer');
-                              $.sendMessage("Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "$");
+                              $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "$");
                           });
                         });
                     }
@@ -962,7 +962,7 @@ tg.controller('ConvertController', ($) => {
                             var result = monto / rate_usd;
 
                             botan.track($.message, 'User answer');
-                            $.sendMessage("Hola, " + monto + " $ equivalen a " + result.toFixed(2) + "BTC");
+                            $.sendMessage("" + monto + " $ equivalen a " + result.toFixed(2) + "BTC");
                         });
                       });
                     }
@@ -1011,7 +1011,7 @@ tg.controller('ConvertController', ($) => {
                                 var result = monto * rate_vef;
 
                                 botan.track($.message, 'User answer');
-                                $.sendMessage("Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "Bs.");
+                                $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "Bs.");
                             });
                           }
                         });
@@ -1033,7 +1033,7 @@ tg.controller('ConvertController', ($) => {
                               var result = monto / rate_vef;
 
                               botan.track($.message, 'User answer');
-                              $.sendMessage("Hola, " + monto + " Bs. equivalen a " + result.toFixed(2) + "BTC");
+                              $.sendMessage("" + monto + " Bs. equivalen a " + result.toFixed(2) + "BTC");
                           });
                         }
                       });
@@ -1054,7 +1054,7 @@ tg.controller('ConvertController', ($) => {
                               var result = monto * rate_brl;
 
                               botan.track($.message, 'User answer');
-                              $.sendMessage("Hola, " + monto + " BTC equivalen a " + result.toFixed(2) + "R$");
+                              $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "R$");
                           });
                         });
                     }
@@ -1076,7 +1076,7 @@ tg.controller('ConvertController', ($) => {
                                 var result = monto / rate_brl;
 
                                 botan.track($.message, 'User answer');
-                                $.sendMessage("Hola, " + monto + " R$ equivalen a " + result.toFixed(2) + "BTC");
+                                $.sendMessage("" + monto + " R$ equivalen a " + result.toFixed(2) + "BTC");
                             });
                           });
                         });
@@ -1092,7 +1092,7 @@ tg.controller('ConvertController', ($) => {
                           client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                             var result_ether = monto / parseFloat(data.BTC_ETH.last);
                             botan.track($.message, 'User answer');
-                            $.sendMessage("Hola, " + monto + " btc equivalen a " + result_ether.toFixed(8) + " ETH");
+                            $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " ETH");
                           });
                         });
                     }
@@ -1107,7 +1107,7 @@ tg.controller('ConvertController', ($) => {
                           client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                             var result_ether = monto * parseFloat(data.BTC_ETH.last);
                             botan.track($.message, 'User answer');
-                            $.sendMessage("Hola, " + monto + " ETH equivalen a " + result_ether.toFixed(8) + " BTC");
+                            $.sendMessage("" + monto + " ETH equivalen a " + result_ether.toFixed(8) + " BTC");
                           });
                         });
                     }
@@ -1122,7 +1122,7 @@ tg.controller('ConvertController', ($) => {
                           client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
                             botan.track($.message, 'User answer');
                             var result = monto * parseFloat(data.result.XETHZUSD.c[0]);
-                            $.sendMessage("Hola, " + monto + " eth equivalen a " + result + "$");
+                            $.sendMessage("" + monto + " eth equivalen a " + result + "$");
                           });
                         });
                     }
@@ -1137,7 +1137,7 @@ tg.controller('ConvertController', ($) => {
                           client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
                             botan.track($.message, 'User answer');
                             var result = monto / parseFloat(data.result.XETHZUSD.c[0]);
-                            $.sendMessage("Hola, " + monto + " $ equivalen a " + result + "ETH");
+                            $.sendMessage("" + monto + " $ equivalen a " + result + "ETH");
                           });
                         });
                     }
@@ -1152,7 +1152,7 @@ tg.controller('ConvertController', ($) => {
                           client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
                             botan.track($.message, 'User answer');
                             var result = monto * parseFloat(data.result.XETHZEUR.c[0]);
-                            $.sendMessage("Hola, " + monto + " ETH equivalen a " + result + "");
+                            $.sendMessage("" + monto + " ETH equivalen a " + result + "");
                           });
                         });
                     }
@@ -1167,7 +1167,7 @@ tg.controller('ConvertController', ($) => {
                           client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
                             botan.track($.message, 'User answer');
                             var result = monto / parseFloat(data.result.XETHZEUR.c[0]);
-                            $.sendMessage("Hola, " + monto + "  equivalen a " + result + "ETH");
+                            $.sendMessage("" + monto + "  equivalen a " + result + "ETH");
                           });
                         });
                     }
@@ -1182,7 +1182,7 @@ tg.controller('ConvertController', ($) => {
                           client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                             var result_ether = monto / parseFloat(data.BTC_DAO.last);
                             botan.track($.message, 'User answer');
-                            $.sendMessage("Hola, " + monto + " btc equivalen a " + result_ether.toFixed(8) + " DAO");
+                            $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " DAO");
                           });
                         });
                     }
@@ -1197,7 +1197,7 @@ tg.controller('ConvertController', ($) => {
                           client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                             var result_ether = monto * parseFloat(data.BTC_DAO.last);
                             botan.track($.message, 'User answer');
-                            $.sendMessage("Hola, " + monto + " DAO equivalen a " + result_ether.toFixed(8) + " BTC");
+                            $.sendMessage("" + monto + " DAO equivalen a " + result_ether.toFixed(8) + " BTC");
                           });
                         });
                     }
@@ -1216,7 +1216,7 @@ tg.controller('ConvertController', ($) => {
                                   rate_usd = rate_usd / 2;
                               var result_convert = result_dao * rate_usd;
                               botan.track($.message, 'User answer');
-                              $.sendMessage("Hola, " + monto + " DAO equivalen a " + result_convert.toFixed(2) + " $");
+                              $.sendMessage("" + monto + " DAO equivalen a " + result_convert.toFixed(2) + " $");
                             });
                           });
                         });
@@ -1236,7 +1236,7 @@ tg.controller('ConvertController', ($) => {
                                   rate_usd = rate_usd / 2;
                               var result_convert = result_dao / rate_usd;
                               botan.track($.message, 'User answer');
-                              $.sendMessage("Hola, " + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
+                              $.sendMessage("" + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
                             });
                           });
                         });
@@ -1252,7 +1252,7 @@ tg.controller('ConvertController', ($) => {
                           client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                             var result_ether = monto / parseFloat(data.BTC_LSK.last);
                             botan.track($.message, 'User answer');
-                            $.sendMessage("Hola, " + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
+                            $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
                           });
                         });
                     }
@@ -1267,7 +1267,7 @@ tg.controller('ConvertController', ($) => {
                           client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                             var result_ether = monto * parseFloat(data.BTC_LSK.last);
                             botan.track($.message, 'User answer');
-                            $.sendMessage("Hola, " + monto + " LSK equivalen a " + result_ether.toFixed(8) + " BTC");
+                            $.sendMessage("" + monto + " LSK equivalen a " + result_ether.toFixed(8) + " BTC");
                           });
                         });
                     }
@@ -1286,7 +1286,7 @@ tg.controller('ConvertController', ($) => {
                                   rate_usd = rate_usd / 2;
                               var result_convert = result_lsk * rate_usd;
                               botan.track($.message, 'User answer');
-                              $.sendMessage("Hola, " + monto + " LSK equivalen a " + result_convert.toFixed(2) + " $");
+                              $.sendMessage("" + monto + " LSK equivalen a " + result_convert.toFixed(2) + " $");
                             });
                           });
                         });
@@ -1306,7 +1306,7 @@ tg.controller('ConvertController', ($) => {
                                   rate_usd = rate_usd / 2;
                               var result_convert = result_lsk / rate_usd;
                               botan.track($.message, 'User answer');
-                              $.sendMessage("Hola, " + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
+                              $.sendMessage("" + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
                             });
                           });
                         });
