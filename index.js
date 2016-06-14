@@ -27,13 +27,7 @@ tg.router.
     when(['/convert :type :amount'], 'ConvertController')
 
 tg.router.
-    when(['/ether'], 'PoloniexController')
-
-tg.router.
-    when(['/dao'], 'PoloniexController')
-
-tg.router.
-    when(['/lisk'], 'PoloniexController')
+    when(['/ether', '/dao', '/lisk'], 'PoloniexController')
 
 tg.router.
     when(['/grafico_bitfinex', '/grafico_kraken'], 'GraficosController')
@@ -537,7 +531,18 @@ tg.controller('PoloniexController', ($) => {
     tg.for('/ether', ($) => {
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
         botan.track($.message, 'User answer');
-        $.sendMessage("Hola, un ether cuesta lo siguiente: \n BTC: " + data.BTC_ETH.last + " btc \n Gracias por usar el bot");
+        $.sendMessage("Hola, un ether cuesta lo siguiente: \n BTC: " + data.BTC_ETH.last + " btc");
+      });
+
+      client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
+        var result_eth = parseFloat(data.BTC_ETH.last);
+        client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
+          var rate_usd = parseFloat(data.high) + parseFloat(data.low);
+              rate_usd = rate_usd / 2;
+          var result_convert = result_eth * rate_usd;
+          botan.track($.message, 'User answer');
+          $.sendMessage("1 ETH equivalen a " + result_convert.toFixed(2) + " $ \n Gracias por usar el bot");
+        });
       });
     });
 
@@ -560,6 +565,24 @@ tg.controller('PoloniexController', ($) => {
     });
 
     tg.for('/lisk', ($) => {
+      client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
+        botan.track($.message, 'User answer');
+        $.sendMessage("Hola, un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc");
+      });
+
+      client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
+        var result_lsk = parseFloat(data.BTC_LSK.last);
+        client.get('https://api.bitfinex.com/v1/pubticker/btcusd', function(data, response){
+          var rate_usd = parseFloat(data.high) + parseFloat(data.low);
+              rate_usd = rate_usd / 2;
+          var result_convert = result_lsk * rate_usd;
+          botan.track($.message, 'User answer');
+          $.sendMessage("1 LSK equivalen a " + result_convert.toFixed(2) + " $ \n Gracias por usar el bot");
+        });
+      });
+    });
+
+    tg.for('/hallaca', ($) => {
       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
         botan.track($.message, 'User answer');
         $.sendMessage("Hola, un lisk cuesta lo siguiente: \n BTC: " + data.BTC_LSK.last + " btc");
