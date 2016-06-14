@@ -27,7 +27,7 @@ tg.router.
     when(['/convert :type :amount'], 'ConvertController')
 
 tg.router.
-    when(['/ether', '/dao', '/lisk'], 'PoloniexController')
+    when(['/ether', '/dao', '/lisk', '/hallacas'], 'PoloniexController')
 
 tg.router.
     when(['/grafico_bitfinex', '/grafico_kraken'], 'GraficosController')
