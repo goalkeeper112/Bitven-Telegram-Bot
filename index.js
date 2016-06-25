@@ -35,14 +35,180 @@ tg.router.
     when(['/grafico_bitfinex', '/grafico_kraken', '/dolartoday'], 'GraficosController')
 
 tg.router.
-    when(['/ultima_vela_bitfinex','/vela_bitfinex_1m', '/vela_bitfinex_3m', '/vela_bitfinex_5m', '/vela_bitfinex_15m', '/vela_bitfinex_30m', '/vela_bitfinex_1h', '/vela_bitfinex_2h', '/vela_bitfinex_4h', '/vela_bitfinex_6h', '/vela_bitfinex_12h', '/vela_bitfinex_1d', '/vela_bitfinex_3d', '/vela_bitfinex_1w'], 'VelasBitfinexController')
+    when(['/ultima_bitfinex','/bitfinex_1m', '/bitfinex_3m', '/bitfinex_5m', '/bitfinex_15m', '/bitfinex_30m', '/bitfinex_1h', '/bitfinex_2h', '/bitfinex_4h', '/bitfinex_6h', '/bitfinex_12h', '/bitfinex_1d', '/bitfinex_3d', '/bitfinex_1w'], 'VelasBitfinexController')
 
 tg.router.
-    when(['/ultima_vela_kraken','/vela_kraken_1m', '/vela_kraken_3m', '/vela_kraken_5m', '/vela_kraken_15m', '/vela_kraken_30m', '/vela_kraken_1h', '/vela_kraken_2h', '/vela_kraken_4h', '/vela_kraken_6h', '/vela_kraken_12h', '/vela_kraken_1d', '/vela_kraken_3d', '/vela_kraken_1w'], 'VelasKrakenController')
+    when(['/ultima_kraken','/kraken_1m', '/kraken_3m', '/kraken_5m', '/kraken_15m', '/kraken_30m', '/kraken_1h', '/kraken_2h', '/kraken_4h', '/kraken_6h', '/kraken_12h', '/kraken_1d', '/kraken_3d', '/kraken_1w'], 'VelasKrakenController')
 
 tg.router.
-    when(['/ultima_vela_ltc','/vela_ltc_1m', '/vela_ltc_3m', '/vela_ltc_5m', '/vela_ltc_15m', '/vela_ltc_30m', '/vela_ltc_1h', '/vela_ltc_2h', '/vela_ltc_4h', '/vela_ltc_6h', '/vela_ltc_12h', '/vela_ltc_1d', '/vela_ltc_3d', '/vela_ltc_1w'], 'VelasLTCController')
+    when(['/ultima_ltc','/ltc_1m', '/ltc_3m', '/ltc_5m', '/ltc_15m', '/ltc_30m', '/ltc_1h', '/ltc_2h', '/ltc_4h', '/ltc_6h', '/ltc_12h', '/ltc_1d', '/ltc_3d', '/ltc_1w'], 'VelasLTCController')
 
+tg.router.
+    when(['/30mabitfinex_1m', '/30mabitfinex_3m', '/30mabitfinex_5m', '/30mabitfinex_15m', '/30mabitfinex_30m', '/30mabitfinex_1h', '/30mabitfinex_2h', '/30mabitfinex_4h', '/30mabitfinex_6h', '/30mabitfinex_12h', '/30mabitfinex_1d', '/30mabitfinex_3d', '/30mabitfinex_1w'], 'MAController')
+
+tg.router.
+    when(['/30makraken_1m', '/30makraken_3m', '/30makraken_5m', '/30makraken_15m', '/30makraken_30m', '/30makraken_1h', '/30makraken_2h', '/30makraken_4h', '/30makraken_6h', '/30makraken_12h', '/30makraken_1d', '/30makraken_3d', '/30makraken_1w'], 'MAController')
+
+tg.router.
+    when(['/30maltc_1m', '/30maltc_3m', '/30maltc_5m', '/30maltc_15m', '/30maltc_30m', '/30maltc_1h', '/30maltc_2h', '/30maltc_4h', '/30maltc_6h', '/30maltc_12h', '/30maltc_1d', '/30maltc_3d', '/30maltc_1w'], 'MAController')
+
+tg.controller('MAController', ($) => {
+  tg.for('/30mabitfinex_1m', ($) => {
+    return controller.velaBitfinex($, 1, "1m");
+  });
+
+  tg.for('/30mabitfinex_3m', ($) => {
+    return controller.velaBitfinex($, 3, "3m");
+  });
+
+  tg.for('/30mabitfinex_5m', ($) => {
+    return controller.velaBitfinex($, 5, "5m");
+  });
+
+  tg.for('/30mabitfinex_15m', ($) => {
+    return controller.velaBitfinex($, 15, "15m");
+  });
+
+  tg.for('/30mabitfinex_30m', ($) => {
+    return controller.velaBitfinex($, 30, "30m");
+  });
+
+  tg.for('/30mabitfinex_1h', ($) => {
+    return controller.velaBitfinex($, 60, "1h");
+  });
+
+  tg.for('/30mabitfinex_2h', ($) => {
+    return controller.velaBitfinex($, 120, "2h");
+  });
+
+  tg.for('/30mabitfinex_4h', ($) => {
+    return controller.velaBitfinex($, 240, "4h");
+  });
+
+  tg.for('/30mabitfinex_6h', ($) => {
+    return controller.velaBitfinex($, 320, "6h");
+  });
+
+  tg.for('/30mabitfinex_12h', ($) => {
+    return controller.velaBitfinex($, 740, "12h");
+  });
+
+  tg.for('/30mabitfinex_1d', ($) => {
+    return controller.velaBitfinex($, 1440, "1d");
+  });
+
+  tg.for('/30mabitfinex_3d', ($) => {
+    return controller.velaBitfinex($, 4320, "3d");
+  });
+
+  tg.for('/30mabitfinex_1w', ($) => {
+    return controller.velaBitfinex($, 10080, "1w");
+  });
+
+  tg.for('/30makraken_1m', ($) => {
+    return controller.velaKraken($, 1, "1m");
+  });
+
+  tg.for('/30makraken_3m', ($) => {
+    return controller.velaKraken($, 3, "3m");
+  });
+
+  tg.for('/30makraken_5m', ($) => {
+    return controller.velaKraken($, 5, "5m");
+  });
+
+  tg.for('/30makraken_15m', ($) => {
+    return controller.velaKraken($, 15, "15m");
+  });
+
+  tg.for('/30makraken_30m', ($) => {
+    return controller.velaKraken($, 30, "30m");
+  });
+
+  tg.for('/30makraken_1h', ($) => {
+    return controller.velaKraken($, 60, "1h");
+  });
+
+  tg.for('/30makraken_2h', ($) => {
+    return controller.velaKraken($, 120, "2h");
+  });
+
+  tg.for('/30makraken_4h', ($) => {
+    return controller.velaKraken($, 240, "4h");
+  });
+
+  tg.for('/30makraken_6h', ($) => {
+    return controller.velaKraken($, 320, "6h");
+  });
+
+  tg.for('/30makraken_12h', ($) => {
+    return controller.velaKraken($, 740, "12h");
+  });
+
+  tg.for('/30makraken_1d', ($) => {
+    return controller.velaKraken($, 1440, "1d");
+  });
+
+  tg.for('/30makraken_3d', ($) => {
+    return controller.velaKraken($, 4320, "3d");
+  });
+
+  tg.for('/30makraken_1w', ($) => {
+    return controller.velaKraken($, 10080, "1w");
+  });
+
+  tg.for('/30maltc_1m', ($) => {
+    return controller.maLTC($, 1, "1m");
+  });
+
+  tg.for('/30maltc_3m', ($) => {
+    return controller.maLTC($, 3, "3m");
+  });
+
+  tg.for('/30maltc_5m', ($) => {
+    return controller.maLTC($, 5, "5m");
+  });
+
+  tg.for('/30maltc_15m', ($) => {
+    return controller.maLTC($, 15, "15m");
+  });
+
+  tg.for('/30maltc_30m', ($) => {
+    return controller.maLTC($, 30, "30m");
+  });
+
+  tg.for('/30maltc_1h', ($) => {
+    return controller.maLTC($, 60, "1h");
+  });
+
+  tg.for('/30maltc_2h', ($) => {
+    return controller.maLTC($, 120, "2h");
+  });
+
+  tg.for('/30maltc_4h', ($) => {
+    return controller.maLTC($, 240, "4h");
+  });
+
+  tg.for('/30maltc_6h', ($) => {
+    return controller.maLTC($, 320, "6h");
+  });
+
+  tg.for('/30maltc_12h', ($) => {
+    return controller.maLTC($, 740, "12h");
+  });
+
+  tg.for('/30maltc_1d', ($) => {
+    return controller.maLTC($, 1440, "1d");
+  });
+
+  tg.for('/30maltc_3d', ($) => {
+    return controller.maLTC($, 4320, "3d");
+  });
+
+  tg.for('/30maltc_1w', ($) => {
+    return controller.maLTC($, 10080, "1w");
+  });
+});
 
 tg.controller('VelasBitfinexController', ($) => {
   tg.for('/ultima_vela_bitfinex', ($) => {
@@ -51,55 +217,55 @@ tg.controller('VelasBitfinexController', ($) => {
     })
   });
 
-  tg.for('/vela_bitfinex_1m', ($) => {
+  tg.for('/bitfinex_1m', ($) => {
     return controller.velaBitfinex($, 1, "1m");
   });
 
-  tg.for('/vela_bitfinex_3m', ($) => {
+  tg.for('/bitfinex_3m', ($) => {
     return controller.velaBitfinex($, 3, "3m");
   });
 
-  tg.for('/vela_bitfinex_5m', ($) => {
+  tg.for('/bitfinex_5m', ($) => {
     return controller.velaBitfinex($, 5, "5m");
   });
 
-  tg.for('/vela_bitfinex_15m', ($) => {
+  tg.for('/bitfinex_15m', ($) => {
     return controller.velaBitfinex($, 15, "15m");
   });
 
-  tg.for('/vela_bitfinex_30m', ($) => {
+  tg.for('/bitfinex_30m', ($) => {
     return controller.velaBitfinex($, 30, "30m");
   });
 
-  tg.for('/vela_bitfinex_1h', ($) => {
+  tg.for('/bitfinex_1h', ($) => {
     return controller.velaBitfinex($, 60, "1h");
   });
 
-  tg.for('/vela_bitfinex_2h', ($) => {
+  tg.for('/bitfinex_2h', ($) => {
     return controller.velaBitfinex($, 120, "2h");
   });
 
-  tg.for('/vela_bitfinex_4h', ($) => {
+  tg.for('/bitfinex_4h', ($) => {
     return controller.velaBitfinex($, 240, "4h");
   });
 
-  tg.for('/vela_bitfinex_6h', ($) => {
+  tg.for('/bitfinex_6h', ($) => {
     return controller.velaBitfinex($, 320, "6h");
   });
 
-  tg.for('/vela_bitfinex_12h', ($) => {
+  tg.for('/bitfinex_12h', ($) => {
     return controller.velaBitfinex($, 740, "12h");
   });
 
-  tg.for('/vela_bitfinex_1d', ($) => {
+  tg.for('/bitfinex_1d', ($) => {
     return controller.velaBitfinex($, 1440, "1d");
   });
 
-  tg.for('/vela_bitfinex_3d', ($) => {
+  tg.for('/bitfinex_3d', ($) => {
     return controller.velaBitfinex($, 4320, "3d");
   });
 
-  tg.for('/vela_bitfinex_1w', ($) => {
+  tg.for('/bitfinex_1w', ($) => {
     return controller.velaBitfinex($, 10080, "1w");
   });
 });
@@ -111,55 +277,55 @@ tg.controller('VelasKrakenController', ($) => {
     })
   });
 
-  tg.for('/vela_kraken_1m', ($) => {
+  tg.for('/kraken_1m', ($) => {
     return controller.velaKraken($, 1, "1m");
   });
 
-  tg.for('/vela_kraken_3m', ($) => {
+  tg.for('/kraken_3m', ($) => {
     return controller.velaKraken($, 3, "3m");
   });
 
-  tg.for('/vela_kraken_5m', ($) => {
+  tg.for('/kraken_5m', ($) => {
     return controller.velaKraken($, 5, "5m");
   });
 
-  tg.for('/vela_kraken_15m', ($) => {
+  tg.for('/kraken_15m', ($) => {
     return controller.velaKraken($, 15, "15m");
   });
 
-  tg.for('/vela_kraken_30m', ($) => {
+  tg.for('/kraken_30m', ($) => {
     return controller.velaKraken($, 30, "30m");
   });
 
-  tg.for('/vela_kraken_1h', ($) => {
+  tg.for('/kraken_1h', ($) => {
     return controller.velaKraken($, 60, "1h");
   });
 
-  tg.for('/vela_kraken_2h', ($) => {
+  tg.for('/kraken_2h', ($) => {
     return controller.velaKraken($, 120, "2h");
   });
 
-  tg.for('/vela_kraken_4h', ($) => {
+  tg.for('/kraken_4h', ($) => {
     return controller.velaKraken($, 240, "4h");
   });
 
-  tg.for('/vela_kraken_6h', ($) => {
+  tg.for('/kraken_6h', ($) => {
     return controller.velaKraken($, 320, "6h");
   });
 
-  tg.for('/vela_kraken_12h', ($) => {
+  tg.for('/kraken_12h', ($) => {
     return controller.velaKraken($, 740, "12h");
   });
 
-  tg.for('/vela_kraken_1d', ($) => {
+  tg.for('/kraken_1d', ($) => {
     return controller.velaKraken($, 1440, "1d");
   });
 
-  tg.for('/vela_kraken_3d', ($) => {
+  tg.for('/kraken_3d', ($) => {
     return controller.velaKraken($, 4320, "3d");
   });
 
-  tg.for('/vela_kraken_1w', ($) => {
+  tg.for('/kraken_1w', ($) => {
     return controller.velaKraken($, 10080, "1w");
   });
 });
@@ -171,55 +337,55 @@ tg.controller('VelasLTCController', ($) => {
     })
   });
 
-  tg.for('/vela_ltc_1m', ($) => {
+  tg.for('/ltc_1m', ($) => {
     return controller.velaBitfinexLTC($, 1, "1m");
   });
 
-  tg.for('/vela_ltc_3m', ($) => {
+  tg.for('/ltc_3m', ($) => {
     return controller.velaBitfinexLTC($, 3, "3m");
   });
 
-  tg.for('/vela_ltc_5m', ($) => {
+  tg.for('/ltc_5m', ($) => {
     return controller.velaBitfinexLTC($, 5, "5m");
   });
 
-  tg.for('/vela_ltc_15m', ($) => {
+  tg.for('/ltc_15m', ($) => {
     return controller.velaBitfinexLTC($, 15, "15m");
   });
 
-  tg.for('/vela_ltc_30m', ($) => {
+  tg.for('/ltc_30m', ($) => {
     return controller.velaBitfinexLTC($, 30, "30m");
   });
 
-  tg.for('/vela_ltc_1h', ($) => {
+  tg.for('/ltc_1h', ($) => {
     return controller.velaBitfinexLTC($, 60, "1h");
   });
 
-  tg.for('/vela_ltc_2h', ($) => {
+  tg.for('/ltc_2h', ($) => {
     return controller.velaBitfinexLTC($, 120, "2h");
   });
 
-  tg.for('/vela_ltc_4h', ($) => {
+  tg.for('/ltc_4h', ($) => {
     return controller.velaBitfinexLTC($, 240, "4h");
   });
 
-  tg.for('/vela_ltc_6h', ($) => {
+  tg.for('/ltc_6h', ($) => {
     return controller.velaBitfinexLTC($, 320, "6h");
   });
 
-  tg.for('/vela_ltc_12h', ($) => {
+  tg.for('/ltc_12h', ($) => {
     return controller.velaBitfinexLTC($, 740, "12h");
   });
 
-  tg.for('/vela_ltc_1d', ($) => {
+  tg.for('/ltc_1d', ($) => {
     return controller.velaBitfinexLTC($, 1440, "1d");
   });
 
-  tg.for('/vela_ltc_3d', ($) => {
+  tg.for('/ltc_3d', ($) => {
     return controller.velaBitfinexLTC($, 4320, "3d");
   });
 
-  tg.for('/vela_ltc_1w', ($) => {
+  tg.for('/ltc_1w', ($) => {
     return controller.velaBitfinexLTC($, 10080, "1w");
   });
 });
