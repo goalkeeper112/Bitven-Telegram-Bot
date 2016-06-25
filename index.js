@@ -35,9 +35,16 @@ tg.router.
     when(['/grafico_bitfinex', '/grafico_kraken', '/dolartoday'], 'GraficosController')
 
 tg.router.
-    when(['/ultima_vela_bitfinex','/vela_bitfinex_1m', '/vela_bitfinex_3m', '/vela_bitfinex_5m', '/vela_bitfinex_15m', '/vela_bitfinex_30m', '/vela_bitfinex_1h', '/vela_bitfinex_2h', '/vela_bitfinex_4h', '/vela_bitfinex_6h', '/vela_bitfinex_12h', '/vela_bitfinex_1d', '/vela_bitfinex_3d', '/vela_bitfinex_1w'], 'MaController')
+    when(['/ultima_vela_bitfinex','/vela_bitfinex_1m', '/vela_bitfinex_3m', '/vela_bitfinex_5m', '/vela_bitfinex_15m', '/vela_bitfinex_30m', '/vela_bitfinex_1h', '/vela_bitfinex_2h', '/vela_bitfinex_4h', '/vela_bitfinex_6h', '/vela_bitfinex_12h', '/vela_bitfinex_1d', '/vela_bitfinex_3d', '/vela_bitfinex_1w'], 'VelasBitfinexController')
 
-tg.controller('MaController', ($) => {
+tg.router.
+    when(['/ultima_vela_kraken','/vela_kraken_1m', '/vela_kraken_3m', '/vela_kraken_5m', '/vela_kraken_15m', '/vela_kraken_30m', '/vela_kraken_1h', '/vela_kraken_2h', '/vela_kraken_4h', '/vela_kraken_6h', '/vela_kraken_12h', '/vela_kraken_1d', '/vela_kraken_3d', '/vela_kraken_1w'], 'VelasKrakenController')
+
+tg.router.
+    when(['/ultima_vela_ltc','/vela_ltc_1m', '/vela_ltc_3m', '/vela_ltc_5m', '/vela_ltc_15m', '/vela_ltc_30m', '/vela_ltc_1h', '/vela_ltc_2h', '/vela_ltc_4h', '/vela_ltc_6h', '/vela_ltc_12h', '/vela_ltc_1d', '/vela_ltc_3d', '/vela_ltc_1w'], 'VelasLTCController')
+
+
+tg.controller('VelasBitfinexController', ($) => {
   tg.for('/ultima_vela_bitfinex', ($) => {
     client.get('https://s5.bitcoinwisdom.com/trades?since=1466822692000&sid=a0bb8680&symbol=bitfinexbtcusd&nonce=1466822711170', (data, response) => {
       $.sendMessage("El valor de la vela actual es " + data[0].price + " con un volumen de " + data[0].amount);
@@ -97,6 +104,127 @@ tg.controller('MaController', ($) => {
   });
 });
 
+tg.controller('VelasKrakenController', ($) => {
+  tg.for('/ultima_vela_kraken', ($) => {
+    client.get('https://s5.bitcoinwisdom.com/trades?since=1466822692000&sid=a0bb8680&symbol=krakenbtcusd&nonce=1466822711170', (data, response) => {
+      $.sendMessage("El valor de la vela actual es " + data[0].price + " con un volumen de " + data[0].amount);
+    })
+  });
+
+  tg.for('/vela_kraken_1m', ($) => {
+    return controller.velaKraken($, 1, "1m");
+  });
+
+  tg.for('/vela_kraken_3m', ($) => {
+    return controller.velaKraken($, 3, "3m");
+  });
+
+  tg.for('/vela_kraken_5m', ($) => {
+    return controller.velaKraken($, 5, "5m");
+  });
+
+  tg.for('/vela_kraken_15m', ($) => {
+    return controller.velaKraken($, 15, "15m");
+  });
+
+  tg.for('/vela_kraken_30m', ($) => {
+    return controller.velaKraken($, 30, "30m");
+  });
+
+  tg.for('/vela_kraken_1h', ($) => {
+    return controller.velaKraken($, 60, "1h");
+  });
+
+  tg.for('/vela_kraken_2h', ($) => {
+    return controller.velaKraken($, 120, "2h");
+  });
+
+  tg.for('/vela_kraken_4h', ($) => {
+    return controller.velaKraken($, 240, "4h");
+  });
+
+  tg.for('/vela_kraken_6h', ($) => {
+    return controller.velaKraken($, 320, "6h");
+  });
+
+  tg.for('/vela_kraken_12h', ($) => {
+    return controller.velaKraken($, 740, "12h");
+  });
+
+  tg.for('/vela_kraken_1d', ($) => {
+    return controller.velaKraken($, 1440, "1d");
+  });
+
+  tg.for('/vela_kraken_3d', ($) => {
+    return controller.velaKraken($, 4320, "3d");
+  });
+
+  tg.for('/vela_kraken_1w', ($) => {
+    return controller.velaKraken($, 10080, "1w");
+  });
+});
+
+tg.controller('VelasLTCController', ($) => {
+  tg.for('/ultima_vela_bitfinex', ($) => {
+    client.get('https://s5.bitcoinwisdom.com/trades?since=1466822692000&sid=a0bb8680&symbol=bitfinexltcusd&nonce=1466822711170', (data, response) => {
+      $.sendMessage("El valor de la vela actual es " + data[0].price + " con un volumen de " + data[0].amount);
+    })
+  });
+
+  tg.for('/vela_ltc_1m', ($) => {
+    return controller.velaBitfinexLTC($, 1, "1m");
+  });
+
+  tg.for('/vela_ltc_3m', ($) => {
+    return controller.velaBitfinexLTC($, 3, "3m");
+  });
+
+  tg.for('/vela_ltc_5m', ($) => {
+    return controller.velaBitfinexLTC($, 5, "5m");
+  });
+
+  tg.for('/vela_ltc_15m', ($) => {
+    return controller.velaBitfinexLTC($, 15, "15m");
+  });
+
+  tg.for('/vela_ltc_30m', ($) => {
+    return controller.velaBitfinexLTC($, 30, "30m");
+  });
+
+  tg.for('/vela_ltc_1h', ($) => {
+    return controller.velaBitfinexLTC($, 60, "1h");
+  });
+
+  tg.for('/vela_ltc_2h', ($) => {
+    return controller.velaBitfinexLTC($, 120, "2h");
+  });
+
+  tg.for('/vela_ltc_4h', ($) => {
+    return controller.velaBitfinexLTC($, 240, "4h");
+  });
+
+  tg.for('/vela_ltc_6h', ($) => {
+    return controller.velaBitfinexLTC($, 320, "6h");
+  });
+
+  tg.for('/vela_ltc_12h', ($) => {
+    return controller.velaBitfinexLTC($, 740, "12h");
+  });
+
+  tg.for('/vela_ltc_1d', ($) => {
+    return controller.velaBitfinexLTC($, 1440, "1d");
+  });
+
+  tg.for('/vela_ltc_3d', ($) => {
+    return controller.velaBitfinexLTC($, 4320, "3d");
+  });
+
+  tg.for('/vela_ltc_1w', ($) => {
+    return controller.velaBitfinexLTC($, 10080, "1w");
+  });
+});
+
+
 tg.controller('StartController', ($) => {
 
   tg.for('/lol', ($) => {
@@ -107,7 +235,7 @@ tg.controller('StartController', ($) => {
 
   tg.for('/start', ($) => {
     botan.track($.message, 'Start Bot');
-    $.sendMessage("Bienvenido a Dafcoin Bot, Conoce el precio de bitcoin en tiempo real \n El bot posee los siguientes comandos: \n 1) /exchange_consultar, ejemplo: /bitfinex /surbitcoin /foxbit \n 2) /convert de_a monto, ejemplo: /convert btc_usd 2000 \n 3) /ether \n 4) /dao \n 5) /lisk \n 6) /bitven \n Gracias por usarme, puedes hacerme alguna donación para mantener al bot funcionando y a su vez apoyar nuevos aportes a la comunidad a través de mi dirección 12GWmx5n8Dbo76Mw4AAJQXZGQD9yUhbr5i \n luisfernando.us");
+    $.sendMessage("Bienvenido a Dafcoin Bot, Conoce el precio de bitcoin en tiempo real \n El bot posee los siguientes comandos: \n 1) /exchange_consultar, ejemplo: /bitfinex /surbitcoin /foxbit /kraken \n 2) /convert de_a monto, ejemplo: /convert btc_usd 2000 \n 3) /ether \n 4) /dao \n 5) /lisk \n 6) /bitven \n Gracias por usarme, puedes hacerme alguna donación para mantener al bot funcionando y a su vez apoyar nuevos aportes a la comunidad a través de mi dirección 12GWmx5n8Dbo76Mw4AAJQXZGQD9yUhbr5i \n luisfernando.us");
 
     $.runMenu({
       message: 'Opciones disponibles: ',
