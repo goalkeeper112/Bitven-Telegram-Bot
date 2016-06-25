@@ -54,107 +54,107 @@ tg.router.
 
 tg.controller('MAController', ($) => {
   tg.for('/30mabitfinex_1m', ($) => {
-    return controller.velaBitfinex($, 1, "1m");
+    return controller.maBitfinex($, 1, "1m");
   });
 
   tg.for('/30mabitfinex_3m', ($) => {
-    return controller.velaBitfinex($, 3, "3m");
+    return controller.maBitfinex($, 3, "3m");
   });
 
   tg.for('/30mabitfinex_5m', ($) => {
-    return controller.velaBitfinex($, 5, "5m");
+    return controller.maBitfinex($, 5, "5m");
   });
 
   tg.for('/30mabitfinex_15m', ($) => {
-    return controller.velaBitfinex($, 15, "15m");
+    return controller.maBitfinex($, 15, "15m");
   });
 
   tg.for('/30mabitfinex_30m', ($) => {
-    return controller.velaBitfinex($, 30, "30m");
+    return controller.maBitfinex($, 30, "30m");
   });
 
   tg.for('/30mabitfinex_1h', ($) => {
-    return controller.velaBitfinex($, 60, "1h");
+    return controller.maBitfinex($, 60, "1h");
   });
 
   tg.for('/30mabitfinex_2h', ($) => {
-    return controller.velaBitfinex($, 120, "2h");
+    return controller.maBitfinex($, 120, "2h");
   });
 
   tg.for('/30mabitfinex_4h', ($) => {
-    return controller.velaBitfinex($, 240, "4h");
+    return controller.maBitfinex($, 240, "4h");
   });
 
   tg.for('/30mabitfinex_6h', ($) => {
-    return controller.velaBitfinex($, 320, "6h");
+    return controller.maBitfinex($, 320, "6h");
   });
 
   tg.for('/30mabitfinex_12h', ($) => {
-    return controller.velaBitfinex($, 740, "12h");
+    return controller.maBitfinex($, 740, "12h");
   });
 
   tg.for('/30mabitfinex_1d', ($) => {
-    return controller.velaBitfinex($, 1440, "1d");
+    return controller.maBitfinex($, 1440, "1d");
   });
 
   tg.for('/30mabitfinex_3d', ($) => {
-    return controller.velaBitfinex($, 4320, "3d");
+    return controller.maBitfinex($, 4320, "3d");
   });
 
   tg.for('/30mabitfinex_1w', ($) => {
-    return controller.velaBitfinex($, 10080, "1w");
+    return controller.maBitfinex($, 10080, "1w");
   });
 
   tg.for('/30makraken_1m', ($) => {
-    return controller.velaKraken($, 1, "1m");
+    return controller.maKraken($, 1, "1m");
   });
 
   tg.for('/30makraken_3m', ($) => {
-    return controller.velaKraken($, 3, "3m");
+    return controller.maKraken($, 3, "3m");
   });
 
   tg.for('/30makraken_5m', ($) => {
-    return controller.velaKraken($, 5, "5m");
+    return controller.maKraken($, 5, "5m");
   });
 
   tg.for('/30makraken_15m', ($) => {
-    return controller.velaKraken($, 15, "15m");
+    return controller.maKraken($, 15, "15m");
   });
 
   tg.for('/30makraken_30m', ($) => {
-    return controller.velaKraken($, 30, "30m");
+    return controller.maKraken($, 30, "30m");
   });
 
   tg.for('/30makraken_1h', ($) => {
-    return controller.velaKraken($, 60, "1h");
+    return controller.maKraken($, 60, "1h");
   });
 
   tg.for('/30makraken_2h', ($) => {
-    return controller.velaKraken($, 120, "2h");
+    return controller.maKraken($, 120, "2h");
   });
 
   tg.for('/30makraken_4h', ($) => {
-    return controller.velaKraken($, 240, "4h");
+    return controller.maKraken($, 240, "4h");
   });
 
   tg.for('/30makraken_6h', ($) => {
-    return controller.velaKraken($, 320, "6h");
+    return controller.maKraken($, 320, "6h");
   });
 
   tg.for('/30makraken_12h', ($) => {
-    return controller.velaKraken($, 740, "12h");
+    return controller.maKraken($, 740, "12h");
   });
 
   tg.for('/30makraken_1d', ($) => {
-    return controller.velaKraken($, 1440, "1d");
+    return controller.maKraken($, 1440, "1d");
   });
 
   tg.for('/30makraken_3d', ($) => {
-    return controller.velaKraken($, 4320, "3d");
+    return controller.maKraken($, 4320, "3d");
   });
 
   tg.for('/30makraken_1w', ($) => {
-    return controller.velaKraken($, 10080, "1w");
+    return controller.maKraken($, 10080, "1w");
   });
 
   tg.for('/30maltc_1m', ($) => {
