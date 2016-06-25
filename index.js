@@ -34,6 +34,69 @@ tg.router.
 tg.router.
     when(['/grafico_bitfinex', '/grafico_kraken', '/dolartoday'], 'GraficosController')
 
+tg.router.
+    when(['/ultima_vela_bitfinex','/vela_bitfinex_1m', '/vela_bitfinex_3m', '/vela_bitfinex_5m', '/vela_bitfinex_15m', '/vela_bitfinex_30m', '/vela_bitfinex_1h', '/vela_bitfinex_2h', '/vela_bitfinex_4h', '/vela_bitfinex_6h', '/vela_bitfinex_12h', '/vela_bitfinex_1d', '/vela_bitfinex_3d', '/vela_bitfinex_1w'], 'MaController')
+
+tg.controller('MaController', ($) => {
+  tg.for('/ultima_vela_bitfinex', ($) => {
+    client.get('https://s5.bitcoinwisdom.com/trades?since=1466822692000&sid=a0bb8680&symbol=bitfinexbtcusd&nonce=1466822711170', (data, response) => {
+      $.sendMessage("El valor de la vela actual es " + data[0].price + " con un volumen de " + data[0].amount);
+    })
+  });
+
+  tg.for('/vela_bitfinex_1m', ($) => {
+    return controller.velaBitfinex($, 1, "1m");
+  });
+
+  tg.for('/vela_bitfinex_3m', ($) => {
+    return controller.velaBitfinex($, 3, "3m");
+  });
+
+  tg.for('/vela_bitfinex_5m', ($) => {
+    return controller.velaBitfinex($, 5, "5m");
+  });
+
+  tg.for('/vela_bitfinex_15m', ($) => {
+    return controller.velaBitfinex($, 15, "15m");
+  });
+
+  tg.for('/vela_bitfinex_30m', ($) => {
+    return controller.velaBitfinex($, 30, "30m");
+  });
+
+  tg.for('/vela_bitfinex_1h', ($) => {
+    return controller.velaBitfinex($, 60, "1h");
+  });
+
+  tg.for('/vela_bitfinex_2h', ($) => {
+    return controller.velaBitfinex($, 120, "2h");
+  });
+
+  tg.for('/vela_bitfinex_4h', ($) => {
+    return controller.velaBitfinex($, 240, "4h");
+  });
+
+  tg.for('/vela_bitfinex_6h', ($) => {
+    return controller.velaBitfinex($, 320, "6h");
+  });
+
+  tg.for('/vela_bitfinex_12h', ($) => {
+    return controller.velaBitfinex($, 740, "12h");
+  });
+
+  tg.for('/vela_bitfinex_1d', ($) => {
+    return controller.velaBitfinex($, 1440, "1d");
+  });
+
+  tg.for('/vela_bitfinex_3d', ($) => {
+    return controller.velaBitfinex($, 4320, "3d");
+  });
+
+  tg.for('/vela_bitfinex_1w', ($) => {
+    return controller.velaBitfinex($, 10080, "1w");
+  });
+});
+
 tg.controller('StartController', ($) => {
 
   tg.for('/lol', ($) => {
@@ -43,7 +106,7 @@ tg.controller('StartController', ($) => {
   });
 
   tg.for('/start', ($) => {
-    botan.track($.message, 'User answer');
+    botan.track($.message, 'Start Bot');
     $.sendMessage("Bienvenido a Dafcoin Bot, Conoce el precio de bitcoin en tiempo real \n El bot posee los siguientes comandos: \n 1) /exchange_consultar, ejemplo: /bitfinex /surbitcoin /foxbit \n 2) /convert de_a monto, ejemplo: /convert btc_usd 2000 \n 3) /ether \n 4) /dao \n 5) /lisk \n 6) /bitven \n Gracias por usarme, puedes hacerme alguna donación para mantener al bot funcionando y a su vez apoyar nuevos aportes a la comunidad a través de mi dirección 12GWmx5n8Dbo76Mw4AAJQXZGQD9yUhbr5i \n luisfernando.us");
 
     $.runMenu({
@@ -94,7 +157,7 @@ tg.controller('StartController', ($) => {
 
                           var result = monto * rate_usd;
 
-                          botan.track($.message, 'User answer');
+                          botan.track($.message, 'Convert Inline Menu');
                           $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "$");
                       });
                     });
@@ -113,7 +176,7 @@ tg.controller('StartController', ($) => {
 
                         var result = monto / rate_usd;
 
-                        botan.track($.message, 'User answer');
+                        botan.track($.message, 'Convert Inline Menu');
                         $.sendMessage("" + monto + " $ equivalen a " + result.toFixed(2) + "BTC");
                     });
                   });
@@ -127,7 +190,7 @@ tg.controller('StartController', ($) => {
                       var monto = parseFloat($.message.text);
                       client.get('https://api.kraken.com/0/public/Ticker?pair=BTCEUR', (data, response) => {
                         var result =  monto * parseFloat(data.result.XXBTZEUR.c[0])
-                        botan.track($.message, 'User answer');
+                        botan.track($.message, 'Convert Inline Menu');
                         $.sendMessage("Hola," + monto + " BTC equivalen a " + result.toFixed(2) + " €");
                       });
                     });
@@ -141,7 +204,7 @@ tg.controller('StartController', ($) => {
                     var monto = parseFloat($.message.text);
                     client.get('https://api.kraken.com/0/public/Ticker?pair=BTCEUR', (data, response) => {
                       var result =  monto / parseFloat(data.result.XXBTZEUR.c[0])
-                      botan.track($.message, 'User answer');
+                      botan.track($.message, 'Convert Inline Menu');
                       $.sendMessage("Hola," + monto + " € equivalen a " + result.toFixed(2) + " ");
                     });
                   });
@@ -162,7 +225,7 @@ tg.controller('StartController', ($) => {
 
                             var result = monto * rate_vef;
 
-                            botan.track($.message, 'User answer');
+                            botan.track($.message, 'Convert Inline Menu');
                             $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "Bs.");
                         });
                       }
@@ -184,7 +247,7 @@ tg.controller('StartController', ($) => {
 
                           var result = monto / rate_vef;
 
-                          botan.track($.message, 'User answer');
+                          botan.track($.message, 'Convert Inline Menu');
                           $.sendMessage("" + monto + " Bs. equivalen a " + result.toFixed(2) + "BTC");
                       });
                     }
@@ -205,7 +268,7 @@ tg.controller('StartController', ($) => {
 
                           var result = monto * rate_brl;
 
-                          botan.track($.message, 'User answer');
+                          botan.track($.message, 'Convert Inline Menu');
                           $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "R$");
                       });
                     });
@@ -227,7 +290,7 @@ tg.controller('StartController', ($) => {
 
                             var result = monto / rate_brl;
 
-                            botan.track($.message, 'User answer');
+                            botan.track($.message, 'Convert Inline Menu');
                             $.sendMessage("" + monto + " R$ equivalen a " + result.toFixed(2) + "BTC");
                         });
                       });
@@ -243,7 +306,7 @@ tg.controller('StartController', ($) => {
 
                       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                         var result_ether = monto / parseFloat(data.BTC_ETH.last);
-                        botan.track($.message, 'User answer');
+                        botan.track($.message, 'Convert Inline Menu');
                         $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " ETH");
                       });
                     });
@@ -258,7 +321,7 @@ tg.controller('StartController', ($) => {
 
                       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                         var result_ether = monto * parseFloat(data.BTC_ETH.last);
-                        botan.track($.message, 'User answer');
+                        botan.track($.message, 'Convert Inline Menu');
                         $.sendMessage("" + monto + " ETH equivalen a " + result_ether.toFixed(8) + " BTC");
                       });
                     });
@@ -272,7 +335,7 @@ tg.controller('StartController', ($) => {
                       var monto = parseFloat($.message.text);
 
                       client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
-                        botan.track($.message, 'User answer');
+                        botan.track($.message, 'Convert Inline Menu');
                         var result = monto * parseFloat(data.result.XETHZUSD.c[0]);
                         $.sendMessage("" + monto + " eth equivalen a " + result + "$");
                       });
@@ -287,7 +350,7 @@ tg.controller('StartController', ($) => {
                       var monto = parseFloat($.message.text);
 
                       client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
-                        botan.track($.message, 'User answer');
+                        botan.track($.message, 'Convert Inline Menu');
                         var result = monto / parseFloat(data.result.XETHZUSD.c[0]);
                         $.sendMessage("" + monto + " $ equivalen a " + result + "ETH");
                       });
@@ -302,7 +365,7 @@ tg.controller('StartController', ($) => {
                       var monto = parseFloat($.message.text);
 
                       client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
-                        botan.track($.message, 'User answer');
+                        botan.track($.message, 'Convert Inline Menu');
                         var result = monto * parseFloat(data.result.XETHZEUR.c[0]);
                         $.sendMessage("" + monto + " ETH equivalen a " + result + "");
                       });
@@ -317,7 +380,7 @@ tg.controller('StartController', ($) => {
                       var monto = parseFloat($.message.text);
 
                       client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
-                        botan.track($.message, 'User answer');
+                        botan.track($.message, 'Convert Inline Menu');
                         var result = monto / parseFloat(data.result.XETHZEUR.c[0]);
                         $.sendMessage("" + monto + "  equivalen a " + result + "ETH");
                       });
@@ -333,7 +396,7 @@ tg.controller('StartController', ($) => {
 
                       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                         var result_ether = monto / parseFloat(data.BTC_DAO.last);
-                        botan.track($.message, 'User answer');
+                        botan.track($.message, 'Convert Inline Menu');
                         $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " DAO");
                       });
                     });
@@ -348,7 +411,7 @@ tg.controller('StartController', ($) => {
 
                       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                         var result_ether = monto * parseFloat(data.BTC_DAO.last);
-                        botan.track($.message, 'User answer');
+                        botan.track($.message, 'Convert Inline Menu');
                         $.sendMessage("" + monto + " DAO equivalen a " + result_ether.toFixed(8) + " BTC");
                       });
                     });
@@ -367,7 +430,7 @@ tg.controller('StartController', ($) => {
                           var rate_usd = parseFloat(data.high) + parseFloat(data.low);
                               rate_usd = rate_usd / 2;
                           var result_convert = result_dao * rate_usd;
-                          botan.track($.message, 'User answer');
+                          botan.track($.message, 'Convert Inline Menu');
                           $.sendMessage("" + monto + " DAO equivalen a " + result_convert.toFixed(2) + " $");
                         });
                       });
@@ -387,7 +450,7 @@ tg.controller('StartController', ($) => {
                           var rate_usd = parseFloat(data.high) + parseFloat(data.low);
                               rate_usd = rate_usd / 2;
                           var result_convert = result_dao / rate_usd;
-                          botan.track($.message, 'User answer');
+                          botan.track($.message, 'Convert Inline Menu');
                           $.sendMessage("" + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
                         });
                       });
@@ -403,7 +466,7 @@ tg.controller('StartController', ($) => {
 
                       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                         var result_ether = monto / parseFloat(data.BTC_LSK.last);
-                        botan.track($.message, 'User answer');
+                        botan.track($.message, 'Convert Inline Menu');
                         $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
                       });
                     });
@@ -418,7 +481,7 @@ tg.controller('StartController', ($) => {
 
                       client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
                         var result_ether = monto * parseFloat(data.BTC_LSK.last);
-                        botan.track($.message, 'User answer');
+                        botan.track($.message, 'Convert Inline Menu');
                         $.sendMessage("" + monto + " LSK equivalen a " + result_ether.toFixed(8) + " BTC");
                       });
                     });
@@ -437,7 +500,7 @@ tg.controller('StartController', ($) => {
                           var rate_usd = parseFloat(data.high) + parseFloat(data.low);
                               rate_usd = rate_usd / 2;
                           var result_convert = result_lsk * rate_usd;
-                          botan.track($.message, 'User answer');
+                          botan.track($.message, 'Convert Inline Menu');
                           $.sendMessage("" + monto + " LSK equivalen a " + result_convert.toFixed(2) + " $");
                         });
                       });
@@ -457,7 +520,7 @@ tg.controller('StartController', ($) => {
                           var rate_usd = parseFloat(data.high) + parseFloat(data.low);
                               rate_usd = rate_usd / 2;
                           var result_convert = result_lsk / rate_usd;
-                          botan.track($.message, 'User answer');
+                          botan.track($.message, 'Convert Inline Menu');
                           $.sendMessage("" + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
                         });
                       });
@@ -541,7 +604,7 @@ tg.controller('ConvertController', ($) => {
 
                 var result = monto * rate_vef;
 
-                botan.track($.message, 'User answer');
+                botan.track($.message, 'Convert direct commands');
                 $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "Bs.");
             });
             break;
@@ -555,7 +618,7 @@ tg.controller('ConvertController', ($) => {
 
                 var result = monto / rate_vef;
 
-                botan.track($.message, 'User answer');
+                botan.track($.message, 'Convert direct commands');
                 $.sendMessage("" + monto + " Bs. equivalen a " + result.toFixed(8) + " BTC");
             });
             break;
@@ -569,7 +632,7 @@ tg.controller('ConvertController', ($) => {
 
                 var result = monto * rate_brl;
 
-                botan.track($.message, 'User answer');
+                botan.track($.message, 'Convert direct commands');
                 $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "R$");
             });
             break;
@@ -582,7 +645,7 @@ tg.controller('ConvertController', ($) => {
 
                 var result = monto / rate_brl;
 
-                botan.track($.message, 'User answer');
+                botan.track($.message, 'Convert direct commands');
                 $.sendMessage("" + monto + " R$ equivalen a " + result.toFixed(8) + " BTC");
             });
             break
@@ -595,7 +658,7 @@ tg.controller('ConvertController', ($) => {
 
                 var result = monto * rate_usd;
 
-                botan.track($.message, 'User answer');
+                botan.track($.message, 'Convert direct commands');
                 $.sendMessage("" + monto + " BTC equivalen a " + result.toFixed(2) + "$");
             });
             break;
@@ -608,7 +671,7 @@ tg.controller('ConvertController', ($) => {
 
                 var result = monto / rate_usd;
 
-                botan.track($.message, 'User answer');
+                botan.track($.message, 'Convert direct commands');
                 $.sendMessage("" + monto + " $ equivalen a " + result.toFixed(8) + " BTC");
             });
             break;
@@ -616,7 +679,7 @@ tg.controller('ConvertController', ($) => {
             var monto = parseFloat($.query.amount);
             client.get('https://api.kraken.com/0/public/Ticker?pair=BTCEUR', (data, response) => {
               var result =  monto * parseFloat(data.result.XXBTZEUR.c[0])
-              botan.track($.message, 'User answer');
+              botan.track($.message, 'Convert direct commands');
               $.sendMessage("Hola," + monto + " Ƀ equivalen a " + result.toFixed(2) + " €");
             });
             break;
@@ -624,7 +687,7 @@ tg.controller('ConvertController', ($) => {
             var monto = parseFloat($.query.amount);
             client.get('https://api.kraken.com/0/public/Ticker?pair=BTCEUR', (data, response) => {
               var result =  monto / parseFloat(data.result.XXBTZEUR.c[0])
-              botan.track($.message, 'User answer');
+              botan.track($.message, 'Convert direct commands');
               $.sendMessage("Hola," + monto + " € equivalen a " + result.toFixed(2) + " Ƀ");
             });
             break;
@@ -633,7 +696,7 @@ tg.controller('ConvertController', ($) => {
 
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_ether = monto / parseFloat(data.BTC_ETH.last);
-              botan.track($.message, 'User answer');
+              botan.track($.message, 'Convert direct commands');
               $.sendMessage("" + monto + " Ƀ equivalen a " + result_ether.toFixed(8) + " ETH");
             });
 
@@ -643,7 +706,7 @@ tg.controller('ConvertController', ($) => {
 
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_ether = monto * parseFloat(data.BTC_ETH.last);
-              botan.track($.message, 'User answer');
+              botan.track($.message, 'Convert direct commands');
               $.sendMessage("" + monto + " eth equivalen a " + result_ether.toFixed(8) + " Ƀ");
             });
 
@@ -652,7 +715,7 @@ tg.controller('ConvertController', ($) => {
             var monto = parseFloat($.query.amount);
 
             client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
-              botan.track($.message, 'User answer');
+              botan.track($.message, 'Convert direct commands');
               var result = monto * parseFloat(data.result.XETHZUSD.c[0]);
               $.sendMessage("" + monto + " eth equivalen a " + result + "$");
             });
@@ -661,7 +724,7 @@ tg.controller('ConvertController', ($) => {
             var monto = parseFloat($.query.amount);
 
             client.get('https://api.kraken.com/0/public/Ticker?pair=ETHUSD', (data, response) => {
-              botan.track($.message, 'User answer');
+              botan.track($.message, 'Convert direct commands');
               var result = monto / parseFloat(data.result.XETHZUSD.c[0]);
               $.sendMessage("" + monto + " $ equivalen a " + result.toFixed(4) + " eth");
             });
@@ -669,7 +732,7 @@ tg.controller('ConvertController', ($) => {
           case "ether_eur":
             var monto = parseFloat($.query.amount);
             client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
-              botan.track($.message, 'User answer');
+              botan.track($.message, 'Convert direct commands');
               var result = monto * parseFloat(data.result.XETHZEUR.c[0]);
               $.sendMessage("" + monto + " eth equivalen a " + result + " €");
             });
@@ -677,7 +740,7 @@ tg.controller('ConvertController', ($) => {
           case "eur_ether":
             var monto = parseFloat($.query.amount);
             client.get('https://api.kraken.com/0/public/Ticker?pair=ETHEUR', (data, response) => {
-              botan.track($.message, 'User answer');
+              botan.track($.message, 'Convert direct commands');
               var result = monto / parseFloat(data.result.XETHZEUR.c[0]);
               $.sendMessage("" + monto + " € equivalen a " + result.toFixed(4) + " eth");
             });
@@ -687,7 +750,7 @@ tg.controller('ConvertController', ($) => {
 
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_ether = monto / parseFloat(data.BTC_DAO.last);
-              botan.track($.message, 'User answer');
+              botan.track($.message, 'Convert direct commands');
               $.sendMessage("" + monto + " Ƀ equivalen a " + result_ether.toFixed(8) + " DAO");
             });
 
@@ -697,7 +760,7 @@ tg.controller('ConvertController', ($) => {
 
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_dao = monto * parseFloat(data.BTC_DAO.last);
-              botan.track($.message, 'User answer');
+              botan.track($.message, 'Convert direct commands');
               $.sendMessage("" + monto + " dao equivalen a " + result_dao.toFixed(8) + " Ƀ");
             });
 
@@ -711,7 +774,7 @@ tg.controller('ConvertController', ($) => {
                 var rate_usd = parseFloat(data.high) + parseFloat(data.low);
                     rate_usd = rate_usd / 2;
                 var result_convert = result_dao * rate_usd;
-                botan.track($.message, 'User answer');
+                botan.track($.message, 'Convert direct commands');
                 $.sendMessage("" + monto + " DAO equivalen a " + result_convert.toFixed(2) + " $");
               });
             });
@@ -728,7 +791,7 @@ tg.controller('ConvertController', ($) => {
                 var result_dao = parseFloat(data.BTC_DAO.last);
                 var result_convert = rate_usd / result_dao;
                 console.log(result_convert)
-                botan.track($.message, 'User answer');
+                botan.track($.message, 'Convert direct commands');
                 $.sendMessage("" + monto + " $ equivalen a " + result_convert.toFixed(2) + " DAO");
               });
             });
@@ -738,7 +801,7 @@ tg.controller('ConvertController', ($) => {
 
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_ether = monto / parseFloat(data.BTC_LSK.last);
-              botan.track($.message, 'User answer');
+              botan.track($.message, 'Convert direct commands');
               $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
             });
 
@@ -748,7 +811,7 @@ tg.controller('ConvertController', ($) => {
 
             client.get('https://poloniex.com/public?command=returnTicker', (data, response) => {
               var result_ether = monto * parseFloat(data.BTC_LSK.last);
-              botan.track($.message, 'User answer');
+              botan.track($.message, 'Convert direct commands');
               $.sendMessage("" + monto + " btc equivalen a " + result_ether.toFixed(8) + " LSK");
             });
 
@@ -762,7 +825,7 @@ tg.controller('ConvertController', ($) => {
                 var rate_usd = parseFloat(data.high) + parseFloat(data.low);
                     rate_usd = rate_usd / 2;
                 var result_convert = result_lsk * rate_usd;
-                botan.track($.message, 'User answer');
+                botan.track($.message, 'Convert direct commands');
                 $.sendMessage("" + monto + " LSK equivalen a " + result_convert.toFixed(2) + " $");
               });
             });
@@ -779,13 +842,13 @@ tg.controller('ConvertController', ($) => {
                 var result_lsk = parseFloat(data.BTC_LSK.last);
                 var result_convert = rate_usd / result_lsk;
                 console.log(result_convert)
-                botan.track($.message, 'User answer');
+                botan.track($.message, 'Convert direct commands');
                 $.sendMessage("" + monto + " $ equivalen a " + result_convert.toFixed(2) + " LSK");
               });
             });
             break;
           default:
-            botan.track($.message, 'User answer');
+            botan.track($.message, 'Error');
             $.sendMessage("No reconozco ese comando, por favor envia /start para conocer las instrucciones");
             //return inlineMenu.convertMenu();
         }
@@ -805,6 +868,7 @@ tg.controller('GraficosController', ($) => {
           screenTimer: 8000
       }, function(err, results){
           console.log(results);
+          botan.track($.message, 'Grafico bitfinex');
           $.sendPhoto(fs.createReadStream(results.fullPNGPath));
       });
     });
@@ -820,6 +884,7 @@ tg.controller('GraficosController', ($) => {
           screenTimer: 8000
       }, function(err, results){
           console.log(results);
+          botan.track($.message, 'Grafico Kraken');
           $.sendPhoto(fs.createReadStream(results.fullPNGPath));
       });
     });
