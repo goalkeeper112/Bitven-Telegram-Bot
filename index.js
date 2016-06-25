@@ -32,7 +32,7 @@ tg.router.
     when(['/ether', '/dao', '/lisk', '/hallacas'], 'PoloniexController')
 
 tg.router.
-    when(['/grafico_bitfinex', '/grafico_kraken'], 'GraficosController')
+    when(['/grafico_bitfinex', '/grafico_kraken', '/dolartoday'], 'GraficosController')
 
 tg.controller('StartController', ($) => {
 
@@ -822,5 +822,9 @@ tg.controller('GraficosController', ($) => {
           console.log(results);
           $.sendPhoto(fs.createReadStream(results.fullPNGPath));
       });
+    });
+
+    tg.for('/dolartoday', ($) => {
+      return controller.dolartoday($);
     });
 });
