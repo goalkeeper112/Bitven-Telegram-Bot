@@ -32,6 +32,9 @@ tg.router.
     when(['/ether', '/dao', '/lisk', '/hallacas'], 'PoloniexController')
 
 tg.router.
+    when(['/halving'], 'HalvingController')
+
+tg.router.
     when(['/grafico_bitfinex', '/grafico_kraken', '/dolartoday'], 'GraficosController')
 
 tg.router.
@@ -392,13 +395,6 @@ tg.controller('VelasLTCController', ($) => {
 
 
 tg.controller('StartController', ($) => {
-
-  tg.for('/lol', ($) => {
-    console.log($.user)
-    $.sendMessage($.user)
-
-  });
-
   tg.for('/start', ($) => {
     botan.track($.message, 'Start Bot');
     $.sendMessage("Bienvenido a Dafcoin Bot, Conoce el precio de bitcoin en tiempo real \n El bot posee los siguientes comandos: \n 1) /exchange_consultar, ejemplo: /bitfinex /surbitcoin /foxbit /kraken \n 2) /convert de_a monto, ejemplo: /convert btc_usd 2000 \n 3) /ether \n 4) /dao \n 5) /lisk \n 6) /bitven \n Gracias por usarme, puedes hacerme alguna donación para mantener al bot funcionando y a su vez apoyar nuevos aportes a la comunidad a través de mi dirección 12GWmx5n8Dbo76Mw4AAJQXZGQD9yUhbr5i \n luisfernando.us");
@@ -830,6 +826,12 @@ tg.controller('StartController', ($) => {
 tg.controller('BitvenController', ($) => {
   tg.for('/bitven', ($) => {
     return controller.bitven($);
+  });
+});
+
+tg.controller('HalvingController', ($) => {
+  tg.for('/halving', ($) => {
+    return controller.halving($);
   });
 });
 
