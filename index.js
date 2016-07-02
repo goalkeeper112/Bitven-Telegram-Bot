@@ -858,7 +858,7 @@ tg.controller('KrakenController', ($) => {
     return controller.kraken($);
   });
 
-  tg.for('/kraken_kether', ($) => {
+  tg.for('/kraken_ether', ($) => {
     return controller.krakenEther($);
   });
 });
