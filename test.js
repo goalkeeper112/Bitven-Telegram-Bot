@@ -9,7 +9,7 @@ return client.get('https://s2.bitcoinwisdom.com/period?step=604800&symbol=bitfin
 
   console.log(arrayLength)
 
-  for(var i = 0; i < 29; i++){
+  for(var i = 0; i < 30; i++){
     console.log(initPoint + i)
     //console.log(data[initPoint + i][3])
     maList.push(data[initPoint + i][3]);
@@ -28,3 +28,4 @@ return client.get('https://s2.bitcoinwisdom.com/period?step=604800&symbol=bitfin
 /*
 var arrayLol = [20, 22, 24, 25, 23, 26, 28, 26, 29, 27];
 console.log(arrayLol.length)*/
+var bitfinexWS = new bitfinexAPI.WS('T53zDyOPyMxyPU0vNeXX2jLqsmvbeeliQpPP5Q15saN', 'WErFtWlxZMS4fVaQ1PPJ7cboHEixnzVmvPyt8NeR7GG')

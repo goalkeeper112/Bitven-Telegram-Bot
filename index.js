@@ -32,9 +32,6 @@ tg.router.
     when(['/ether', '/dao', '/lisk', '/hallacas'], 'PoloniexController')
 
 tg.router.
-    when(['/halving'], 'HalvingController')
-
-tg.router.
     when(['/grafico_bitfinex', '/grafico_kraken', '/dolartoday'], 'GraficosController')
 
 tg.router.
@@ -826,12 +823,6 @@ tg.controller('StartController', ($) => {
 tg.controller('BitvenController', ($) => {
   tg.for('/bitven', ($) => {
     return controller.bitven($);
-  });
-});
-
-tg.controller('HalvingController', ($) => {
-  tg.for('/halving', ($) => {
-    return controller.halving($);
   });
 });
 

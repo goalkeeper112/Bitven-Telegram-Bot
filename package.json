@@ -12,8 +12,12 @@
     "botanio": "0.0.6",
     "node-rest-client": "^1.8.0",
     "node-telegram-bot-api": "^0.21.1",
+    "okcoin": "0.0.3",
     "phantomjs-capture": "^0.1.6",
     "request": "^2.72.0",
     "telegram-node-bot": "^2.1.3"
+  },
+  "devDependencies": {
+    "bitfinex-api-node": "^0.2.9"
   }
 }
