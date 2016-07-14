@@ -23,7 +23,7 @@ tg.router.
     when(['/kraken', '/kraken_ether'], 'KrakenController')
 
 tg.router.
-    when(['/bitven'], 'BitvenController')
+    when(['/bitven', 'cero maricoteo'], 'BitvenController')
 
 tg.router.
     when(['/convert :type :amount'], 'ConvertController')
@@ -824,6 +824,10 @@ tg.controller('BitvenController', ($) => {
   tg.for('/bitven', ($) => {
     return controller.bitven($);
   });
+
+  tg.for('cero maricoteo', ($) => {
+    return controller.ceroMaricoteo($);
+  })
 });
 
 tg.controller('PoloniexController', ($) => {
