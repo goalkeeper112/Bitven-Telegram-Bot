@@ -29,7 +29,7 @@ tg.router.
     when(['/convert :type :amount'], 'ConvertController')
 
 tg.router.
-    when(['/ether', '/dao', '/lisk', '/hallacas', '/siacoin'], 'PoloniexController')
+    when(['/ether', '/dao', '/lisk', '/hallacas', '/siacoin', '/poloniex :moneda'], 'PoloniexController')
 
 tg.router.
     when(['/grafico_bitfinex', '/grafico_kraken', '/dolartoday'], 'GraficosController')
@@ -849,6 +849,10 @@ tg.controller('PoloniexController', ($) => {
 
     tg.for('/siacoin', ($) => {
       return controller.siacoin($);
+    });
+
+    tg.for('/poloniex :moneda', ($) => {
+      return controller.poloniex($, $.query.moneda);
     });
 });
 
