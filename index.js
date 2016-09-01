@@ -1,6 +1,6 @@
 'use strict'
 
-const tg      = require('telegram-node-bot')/*("194307003:AAH_s2M1p1cnCIpF_fZsvR55RGKcCoyN938")*/("126466962:AAHa0NgrPi3WDV4j6A0bFk9zCrWePhbP3Lk")
+const tg      = require('telegram-node-bot')/*("194307003:AAH_s2M1p1cnCIpF_fZsvR55RGKcCoyN938")*/("251687242:AAHBC1sJFdljZWBIGjmZFSjLWo-IuNAz32c")
 const controller = require('./lib/controllers');
 //const inlineMenu = require('./lib/inlineMenus');
 const Client  = require("node-rest-client").Client;
